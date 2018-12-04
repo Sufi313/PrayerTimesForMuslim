@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PrayerTimesForMuslim</string>
+    <string name="appwidget_text">UPCOMING PRAYER</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="come_to_success"><b>"Come To The Success"</b></string>
+    <string name="splash_screen_background">Splash Screen Background</string>
+
+
+    <array name="my_array">
+        <item>one</item>
+        <item>two</item>
+        <item>three</item>
+        <item>four</item>
+        <item>five</item>
+        <item>six</item>
+    </array>
+
+</resources>
