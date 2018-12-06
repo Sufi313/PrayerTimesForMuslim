@@ -10,9 +10,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         useLibrary 'org.apache.http.legacy'
-        multiDexEnabled false
-//        android.useAndroidX true
-//        android.enableJetifier true
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
