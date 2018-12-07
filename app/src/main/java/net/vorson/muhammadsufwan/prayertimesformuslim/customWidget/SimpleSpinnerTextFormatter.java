@@ -1,7 +1,9 @@
-package net.vorson.muhammadsufwan.prayertimesformuslim.util;
+package net.vorson.muhammadsufwan.prayertimesformuslim.customWidget;
 
 import android.text.Spannable;
 import android.text.SpannableString;
+
+import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.SpinnerTextFormatter;
 
 public class SimpleSpinnerTextFormatter implements SpinnerTextFormatter {
 

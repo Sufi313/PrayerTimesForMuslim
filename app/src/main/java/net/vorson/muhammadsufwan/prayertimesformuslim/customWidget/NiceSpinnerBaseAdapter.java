@@ -1,4 +1,4 @@
-package net.vorson.muhammadsufwan.prayertimesformuslim.util;
+package net.vorson.muhammadsufwan.prayertimesformuslim.customWidget;
 
 import android.content.Context;
 import android.os.Build;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
+import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.SpinnerTextFormatter;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;

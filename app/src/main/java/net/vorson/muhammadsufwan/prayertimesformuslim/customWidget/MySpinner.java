@@ -1,4 +1,4 @@
-package net.vorson.muhammadsufwan.prayertimesformuslim.util;
+package net.vorson.muhammadsufwan.prayertimesformuslim.customWidget;
 
 
 import android.animation.ObjectAnimator;
@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
+import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.SpinnerTextFormatter;
 
 import java.util.List;
 

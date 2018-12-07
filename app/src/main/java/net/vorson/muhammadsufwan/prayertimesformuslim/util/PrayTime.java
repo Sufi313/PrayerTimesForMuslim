@@ -36,7 +36,7 @@ import java.util.TimeZone;
 
 public class PrayTime {
 
-  // ---------------------- Global Variables --------------------
+  /**---------------------- Global Variables --------------------**/
   private int calcMethod; // caculation method
   private int asrJuristic; // Juristic method for Asr
   private int dhuhrMinutes; // minutes after mid-day for Dhuhr
@@ -46,7 +46,8 @@ public class PrayTime {
   private double lng; // longitude
   private double timeZone; // time-zone
   private double JDate; // Julian date
-  // ------------------------------------------------------------
+
+  /** ------------------------------------------------------------**/
   // Calculation Methods
   public static final int JAFARI = 0; // Ithna Ashari
   public static final int KARACHI = 1; // University of Islamic Sciences, KARACHI
@@ -56,26 +57,36 @@ public class PrayTime {
   public static final int EGYPT = 5; // Egyptian General Authority of Survey
   public static final int CUSTOM = 7; // CUSTOM Setting
   public static final int TEHRAN = 6; // Institute of Geophysics, University of TEHRAN
+
   // Juristic Methods
   public static final int SHAFII = 0; // SHAFII (standard)
   public static final int HANAFI = 1; // HANAFI
+
   // Adjusting Methods for Higher Latitudes
   public static final int NONE = 0; // No adjustment
   public static final int MID_NIGHT = 1; // middle of night
   public static final int ONE_SEVENTH = 2; // 1/7th of night
   public static final int ANGLE_BASED = 3; // angle/60th of night
+
   // Time Formats
   public static final int TIME_24 = 0; // 24-hour format
   public static final int TIME_12 = 1; // 12-hour format
   public static final int TIME_12_NS = 2; // 12-hour format with no suffix
   public static final int FLOATING = 3; // floating point number
+
   // Time Names
   private ArrayList<String> timeNames;
-  private String InvalidTime; // The string used for invalid times
+
+  // The string used for invalid times
+  private String InvalidTime;
+
   // --------------------- Technical Settings --------------------
   private int numIterations; // number of iterations needed to compute times
+
   // ------------------- Calc Method Parameters --------------------
   private HashMap<Integer, double[]> methodParams;
+
+  /** ------------------------------------------------------------**/
 
   /*
    * this.methodParams[methodNum] = new Array(fa, ms, mv, is, iv);
@@ -97,7 +108,7 @@ public class PrayTime {
     this.setTimeFormat(0);
 
     // Time Names
-    timeNames = new ArrayList<String>();
+    timeNames = new ArrayList<>();
     timeNames.add("Fajr");
     timeNames.add("Sunrise");
     timeNames.add("Dhuhr");
@@ -132,7 +143,7 @@ public class PrayTime {
      * selector (0 = angle; 1 = minutes after maghrib) iv : isha parameter
      * value (in angle or minutes)
      */
-    methodParams = new HashMap<Integer, double[]>();
+    methodParams = new HashMap<>();
 
     // JAFARI
     double[] Jvalues = {16, 0, 4, 0, 14};

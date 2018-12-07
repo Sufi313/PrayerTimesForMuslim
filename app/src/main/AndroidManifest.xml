@@ -29,7 +29,9 @@
         android:roundIcon="@drawable/ic_new_make"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="user">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,7 +54,20 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".PrayerViewActivity"></activity>
-    </application>
+        <activity android:name=".PrayerViewActivity"
+            android:screenOrientation="user"></activity>
+        <receiver
+            android:name="net.vorson.muhammadsufwan.prayertimesformuslim.util.TimeZoneChangedReceiver"
+            android:enabled="true"
+            android:exported="true" />
 
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/secret_google_maps_api_key" />
+
+    </application>
 </manifest>

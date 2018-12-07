@@ -42,34 +42,6 @@
             android:text="حيَّ على الفلاح"/>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <ImageView
-                android:visibility="invisible"
-                android:id="@+id/imageDoorLeft"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:scaleType="fitXY"
-                android:src="@drawable/leftdoor" />
-
-            <ImageView
-                android:visibility="invisible"
-                android:id="@+id/imageDoorRight"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:scaleType="fitXY"
-                android:src="@drawable/rightdoor" />
-
-        </LinearLayout>
-
     </FrameLayout>
 
 </LinearLayout>

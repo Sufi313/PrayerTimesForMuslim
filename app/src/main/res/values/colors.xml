@@ -6,6 +6,7 @@
 
 
 
+    <color name="cardColor">#70ffffff</color>
     <color name="widgetColorPrimary">#0288d1</color>
     <color name="widgetColorPrimaryDark">#01579b</color>
     <color name="white">#FFF</color>

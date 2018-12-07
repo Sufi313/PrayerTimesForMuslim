@@ -1,6 +1,9 @@
-package net.vorson.muhammadsufwan.prayertimesformuslim.util;
+package net.vorson.muhammadsufwan.prayertimesformuslim.customWidget;
 
 import android.content.Context;
+
+import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.SpinnerTextFormatter;
+
 import java.util.List;
 
 public class NiceSpinnerAdapter<T> extends NiceSpinnerBaseAdapter {

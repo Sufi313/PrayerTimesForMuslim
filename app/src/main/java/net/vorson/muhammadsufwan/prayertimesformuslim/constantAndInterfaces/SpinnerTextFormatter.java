@@ -1,4 +1,4 @@
-package net.vorson.muhammadsufwan.prayertimesformuslim.util;
+package net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces;
 
 import android.text.Spannable;
 

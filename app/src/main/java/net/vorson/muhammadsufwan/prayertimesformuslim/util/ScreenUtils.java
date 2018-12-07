@@ -3,10 +3,12 @@ package net.vorson.muhammadsufwan.prayertimesformuslim.util;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 
-/**
- * Created by Ali on 12/07/2015.
+/*
+ * Created by Muhammad.sufwan on 12/06/2018.
  */
+
 public class ScreenUtils {
+
   /**
    * Locks the device window in actual screen mode.
    */
