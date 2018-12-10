@@ -19,8 +19,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import io.reactivex.annotations.NonNull;
 
+import static net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants.REQUEST_CALENDAR;
+import static net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants.REQUEST_CAMERA;
+import static net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants.REQUEST_LOCATION;
+import static net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants.REQUEST_NOTIFICATION;
+import static net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants.REQUEST_WRITE_EXTERNAL;
+
 /**
- * Created by metin on 14.12.2015.
+ * Created by Sufwan on 14.12.2018.
  */
 public class PermissionUtils {
 
@@ -80,7 +86,7 @@ public class PermissionUtils {
             if (intent.resolveActivity(packageManager) != null) {
                 act.startActivity(intent);
             } else {
-                ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.ACCESS_NOTIFICATION_POLICY}, 0);
+                ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.ACCESS_NOTIFICATION_POLICY}, REQUEST_NOTIFICATION);
             }
         }
     }
@@ -97,7 +103,7 @@ public class PermissionUtils {
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.CAMERA}, 0);
+                            ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
                         }
                     });
 
@@ -119,7 +125,7 @@ public class PermissionUtils {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+                            ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
                         }
                     });
 
@@ -141,7 +147,7 @@ public class PermissionUtils {
             builder.setTitle(R.string.permissionCalendarTitle).setMessage(R.string.permissionCalendarText).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.WRITE_CALENDAR}, 0);
+                    ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.WRITE_CALENDAR}, REQUEST_CALENDAR);
                 }
             });
 
@@ -165,7 +171,7 @@ public class PermissionUtils {
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                            ActivityCompat.requestPermissions(act, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL);
                         }
                     });
 

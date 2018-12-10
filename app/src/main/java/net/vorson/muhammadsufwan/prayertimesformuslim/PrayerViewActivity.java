@@ -1,32 +1,27 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim;
 
 import androidx.appcompat.app.AppCompatActivity;
-import io.reactivex.annotations.NonNull;
+import io.fabric.sdk.android.Fabric;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.crashlytics.android.Crashlytics;
 
-import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
-
-import net.vorson.muhammadsufwan.prayertimesformuslim.util.LocationHelper;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PermissionUtils;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PrayTime;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 
-public class PrayerViewActivity extends AppCompatActivity implements Constants, LocationHelper.LocationCallback {
+public class PrayerViewActivity extends AppCompatActivity {
 
-    private static boolean sIsAlarmInit = false;
-    int mIndex = 0;
 
-    private PermissionUtils mNeedPermissions;
-    private Location mLastLocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,29 +35,56 @@ public class PrayerViewActivity extends AppCompatActivity implements Constants, 
         TextView maghrib = findViewById(R.id.maghrib);
         TextView isha = findViewById(R.id.isha);
 
-        mNeedPermissions = PermissionUtils.get(this);
+        final Fabric fabric = new Fabric.Builder(this)
+                .kits(new Crashlytics())
+                .debuggable(true)
+                .build();
+        Fabric.with(fabric);
 
-        LocationHelper locationHelper = new LocationHelper();
-        mLastLocation = locationHelper.getLocation();
+        if (PermissionUtils.get(this).pLocation==false){
+            PermissionUtils.get(this).needLocation(this);
+        }
 
-        Toast.makeText(this, "fdsfsdfdsf", Toast.LENGTH_SHORT).show();
+        double latitude = 25.008781;
+        double longitude = 67.0618058;
 
-        PrayTime prayTime = new PrayTime();
-        prayTime.setCalcMethod(1);
-        prayTime.setAsrJuristic(1);
-        prayTime.setAdjustHighLats(0);
-        prayTime.setTimeFormat(1);
+        //Get NY time zone instance
+        TimeZone defaultTz = TimeZone.getDefault();
+
+        //Get NY calendar object with current date/time
+        Calendar defaultCalc = Calendar.getInstance(defaultTz);
+
+        //Get offset from UTC, accounting for DST
+        int defaultTzOffsetMs = defaultCalc.get(Calendar.ZONE_OFFSET) + defaultCalc.get(Calendar.DST_OFFSET);
+        double timezone = defaultTzOffsetMs / (1000 * 60 * 60);
+        // Test Prayer times here
+        PrayTime prayers = new PrayTime();
+
+        prayers.setTimeFormat(PrayTime.TIME_12);
+        prayers.setCalcMethod(PrayTime.KARACHI);
+        prayers.setAsrJuristic(PrayTime.HANAFI);
+        prayers.setAdjustHighLats(PrayTime.ANGLE_BASED);
 
         int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
-        prayTime.tune(offsets);
+        prayers.tune(offsets);
 
-        LinkedHashMap<String, String> prayerTimes = PrayTime.getPrayerTimes(this, mIndex, 25.008781, 67.0618058);
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
 
-        fajr.setText(prayerTimes.get(String.valueOf(fajr.getTag())));
-        dhuhr.setText(prayerTimes.get(String.valueOf(dhuhr.getTag())));
-        asr.setText(prayerTimes.get(String.valueOf(asr.getTag())));
-        maghrib.setText(prayerTimes.get(String.valueOf(maghrib.getTag())));
-        isha.setText(prayerTimes.get(String.valueOf(isha.getTag())));
+        ArrayList<String> prayerTimes = prayers.getPrayerTimes(cal,
+                latitude, longitude, timezone);
+        ArrayList<String> prayerNames = prayers.getTimeNames();
+
+        for (int i = 0; i < prayerTimes.size(); i++) {
+            System.out.println( prayerTimes.get(i));
+        }
+
+        fajr.setText(prayerTimes.get(0));
+        dhuhr.setText(prayerTimes.get(2));
+        asr.setText(prayerTimes.get(3));
+        maghrib.setText(prayerTimes.get(5));
+        isha.setText(prayerTimes.get(6));
 
         final LottieAnimationView lottieAnimationView =  findViewById(R.id.animation_view);
         lottieAnimationView.setImageAssetsFolder("images/");
@@ -71,18 +93,4 @@ public class PrayerViewActivity extends AppCompatActivity implements Constants, 
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionUtils.get(this).onRequestPermissionResult(permissions, grantResults);
-    }
-
-    @Override
-    public void onLocationSettingsFailed() {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-    }
 }
