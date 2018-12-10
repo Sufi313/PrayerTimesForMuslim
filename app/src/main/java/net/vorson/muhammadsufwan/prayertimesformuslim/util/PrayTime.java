@@ -523,8 +523,7 @@ public class PrayTime {
 
     double[] t = dayPortion(times);
 
-    double Fajr = this.computeTime(
-        180 - methodParams.get(this.getCalcMethod())[0], t[0]);
+    double Fajr = this.computeTime(180 - methodParams.get(this.getCalcMethod())[0], t[0]);
 
     double Sunrise = this.computeTime(180 - 0.833, t[1]);
 
@@ -532,10 +531,8 @@ public class PrayTime {
     double Asr = this.computeAsr(1 + this.getAsrJuristic(), t[3]);
     double Sunset = this.computeTime(0.833, t[4]);
 
-    double Maghrib = this.computeTime(
-        methodParams.get(this.getCalcMethod())[2], t[5]);
-    double Isha = this.computeTime(
-        methodParams.get(this.getCalcMethod())[4], t[6]);
+    double Maghrib = this.computeTime(methodParams.get(this.getCalcMethod())[2], t[5]);
+    double Isha = this.computeTime(methodParams.get(this.getCalcMethod())[4], t[6]);
 
     double[] CTimes = {Fajr, Sunrise, Dhuhr, Asr, Sunset, Maghrib, Isha};
 
