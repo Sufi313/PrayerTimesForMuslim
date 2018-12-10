@@ -11,16 +11,13 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
-import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.MySpinner;
+
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.LocationHelper;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PermissionUtils;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PrayTime;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 
 public class PrayerViewActivity extends AppCompatActivity implements Constants, LocationHelper.LocationCallback {
@@ -36,6 +33,7 @@ public class PrayerViewActivity extends AppCompatActivity implements Constants, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paryer_view);
         ScreenUtils.lockOrientation(this);
+
         TextView fajr = findViewById(R.id.fajr);
         TextView dhuhr = findViewById(R.id.dhuhr);
         TextView asr = findViewById(R.id.asr);
@@ -44,15 +42,21 @@ public class PrayerViewActivity extends AppCompatActivity implements Constants, 
 
         mNeedPermissions = PermissionUtils.get(this);
 
-
-
         LocationHelper locationHelper = new LocationHelper();
         mLastLocation = locationHelper.getLocation();
 
-
         Toast.makeText(this, "fdsfsdfdsf", Toast.LENGTH_SHORT).show();
 
-        LinkedHashMap<String, String> prayerTimes = PrayTime.getPrayerTimes(this, mIndex, 24.8684, 67.0568);
+        PrayTime prayTime = new PrayTime();
+        prayTime.setCalcMethod(1);
+        prayTime.setAsrJuristic(1);
+        prayTime.setAdjustHighLats(0);
+        prayTime.setTimeFormat(1);
+
+        int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
+        prayTime.tune(offsets);
+
+        LinkedHashMap<String, String> prayerTimes = PrayTime.getPrayerTimes(this, mIndex, 25.008781, 67.0618058);
 
         fajr.setText(prayerTimes.get(String.valueOf(fajr.getTag())));
         dhuhr.setText(prayerTimes.get(String.valueOf(dhuhr.getTag())));

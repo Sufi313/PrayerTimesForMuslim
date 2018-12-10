@@ -583,7 +583,7 @@ public class PrayTime {
   // convert times array to given time format
   private ArrayList<String> adjustTimesFormat(double[] times) {
 
-    ArrayList<String> result = new ArrayList<String>();
+    ArrayList<String> result = new ArrayList<>();
 
     if (this.getTimeFormat() == FLOATING) {
       for (double time : times) {

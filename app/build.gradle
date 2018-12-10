@@ -42,4 +42,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.airbnb.android:lottie:2.8.0'
     implementation 'io.paperdb:paperdb:2.6'
+
+//    FIREBASE LIBRARIES
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
 }
+apply plugin: 'com.google.gms.google-services'
