@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import net.vorson.muhammadsufwan.prayertimesformuslim.models.Rotatable;
 import net.vorson.muhammadsufwan.prayertimesformuslim.rotatingText.RotatingTextWrapper;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
 //        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_main);
         ScreenUtils.lockOrientation(this);

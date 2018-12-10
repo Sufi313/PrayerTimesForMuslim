@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import com.crashlytics.android.Crashlytics;
+
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.Prefs;
 
@@ -49,14 +51,14 @@ public class PermissionUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             NotificationManager nm = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
             pNotPolicy = nm.isNotificationPolicyAccessGranted();
-//            Crashlytics.setBool("pNotPolicy", pLocation);
+            Crashlytics.setBool("pNotPolicy", pLocation);
         } else
             pNotPolicy = true;
 
-//        Crashlytics.setBool("pCalendar", pCalendar);
-//        Crashlytics.setBool("pCamera", pCamera);
-//        Crashlytics.setBool("pStorage", pStorage);
-//        Crashlytics.setBool("pLocation", pLocation);
+        Crashlytics.setBool("pCalendar", pCalendar);
+        Crashlytics.setBool("pCamera", pCamera);
+        Crashlytics.setBool("pStorage", pStorage);
+        Crashlytics.setBool("pLocation", pLocation);
 
     }
 
