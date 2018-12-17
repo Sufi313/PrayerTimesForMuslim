@@ -11,35 +11,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-//import com.crashlytics.android.Crashlytics;
-//import com.evernote.android.job.Job;
-//import com.evernote.android.job.JobCreator;
-//import com.evernote.android.job.JobManager;
-//import com.github.anrwatchdog.ANRError;
-//import com.github.anrwatchdog.ANRWatchDog;
-//import com.metinkale.prayerapp.settings.Prefs;
-//import com.metinkale.prayerapp.utils.AndroidTimeZoneProvider;
-//import com.metinkale.prayerapp.utils.AppRatingDialog;
-//import com.metinkale.prayerapp.utils.TimeZoneChangedReceiver;
-//import com.metinkale.prayerapp.utils.Utils;
-//import com.metinkale.prayerapp.vakit.LocationService;
-//import com.metinkale.prayerapp.vakit.WidgetService;
-//import com.metinkale.prayerapp.vakit.fragments.VakitFragment;
-//import com.metinkale.prayerapp.vakit.times.Times;
-//import com.metinkale.prayerapp.vakit.times.sources.WebTimes;
-//import com.squareup.leakcanary.LeakCanary;
+
+
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.Prefs;
-
-import org.joda.time.DateTimeZone;
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.TimeZoneChangedReceiver;
 
 import java.util.Locale;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
+import okhttp3.OkHttpClient;
 
 
 public class App extends Application implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -59,8 +44,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
                 if (ex.getMessage().contains("Couldn't update icon")) {
                     Prefs.setShowOngoingNumber(false);
                     Toast.makeText(App.get(), "Crash detected. Show ongoing number disabled...", Toast.LENGTH_LONG).show();
-//                    Crashlytics.setBool("WORKAROUND#1", true);
-//                    Crashlytics.logException(ex);
                     return;
                 }
             }
@@ -77,8 +60,6 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
     }
 
     public static boolean isOnline() {
-        //only checks for connection, not for actual internet connection
-        //everything else need (or should be in) a seperate thread
         ConnectivityManager cm =
                 (ConnectivityManager) get().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -122,62 +103,30 @@ public class App extends Application implements SharedPreferences.OnSharedPrefer
     }
 
 
-//    @Override
-//    public void onCreate() {
-//        super.onCreate();
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            return;
-//        }
-//        mSystemLocale = Locale.getDefault();
-//        LeakCanary.install(this);
-//
-//        Fabric.with(this, new Crashlytics());
-//        Crashlytics.setUserIdentifier(Prefs.getUUID());
-//        if (BuildConfig.DEBUG)
-//            Crashlytics.setBool("isDebug", true);
-//
-//
-//        JobManager.create(this).addJobCreator(new MyJobCreator());
-//
-//        mDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
-//        Thread.setDefaultUncaughtExceptionHandler(mCaughtExceptionHandler);
-//
-//        DateTimeZone.setProvider(new AndroidTimeZoneProvider());
-//        registerReceiver(new TimeZoneChangedReceiver(), new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED));
-//
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Stetho.initializeWithDefaults(this);
+        new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
+
+        mSystemLocale = Locale.getDefault();
+        registerReceiver(new TimeZoneChangedReceiver(), new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED));
+
 //        try {
 //            Times.getTimes();
 //        } catch (Exception e) {
 //            Crashlytics.logException(e);
 //        }
-//
+
 //        Utils.init(this);
 //
 //        WidgetService.start(this);
 //        LocationService.start(this);
 //        Times.setAlarms();
-//
-//        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-//
-//
-//        if ("longcheer".equalsIgnoreCase(Build.BRAND)
-//                || "longcheer".equalsIgnoreCase(Build.MANUFACTURER)
-//                || "general mobile".equalsIgnoreCase(Build.BRAND)
-//                || "general mobile".equalsIgnoreCase(Build.MANUFACTURER)
-//                || "general_mobile".equalsIgnoreCase(Build.BRAND)
-//                || "general_mobile".equalsIgnoreCase(Build.MANUFACTURER)) {
-//            new ANRWatchDog().setANRListener(new ANRWatchDog.ANRListener() {
-//                @Override
-//                public void onAppNotResponding(ANRError error) {
-//                    Crashlytics.logException(error);
-//                }
-//            }).start();
-//        }
-//
-//        if (AppRatingDialog.getInstallationTime() == 0) {
-//            AppRatingDialog.setInstalltionTime(System.currentTimeMillis());
-//        }
-//    }
+
+    }
 
 //    @Override
 //    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

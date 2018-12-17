@@ -32,7 +32,8 @@ public interface Constants {
   String CONFIG_FRAGMENT = "config_fragment";
   String LOCATION_FRAGMENT = "location_fragment";
 
-  int NOTIFICATION_ID = 2010;
+  int NOTIFICATION_ID = 2019;
+  String NOTIFICATION_CHANEL_ID = "2019";
 
 //  SSID  Tendar_Depart
 //  password : knb$2015

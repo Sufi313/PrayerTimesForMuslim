@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
-
 import net.vorson.muhammadsufwan.prayertimesformuslim.App;
 
 import java.util.UUID;

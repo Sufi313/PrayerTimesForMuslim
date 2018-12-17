@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/holo_gray_light"
+    android:fitsSystemWindows="true"
+    tools:context=".HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/widgetColorPrimary"
+            android:theme="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/toolbarLogoImageTicketActivity"
+                    android:layout_width="200dp"
+                    android:layout_height="@dimen/space_fifty"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:tint="@color/color_white"
+                    android:src="@drawable/ic_new_make" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayoutHome"
+            android:layout_below="@+id/appBarHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/widgetColorPrimary"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/widgetColorPrimaryDark"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/color_white"
+            app:tabTextColor="@color/indicator_unselected" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpagerHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tablayoutHome"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </androidx.viewpager.widget.ViewPager>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -23,6 +25,7 @@
         android:required="false" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_new_make"
         android:label="@string/app_name"
@@ -54,13 +57,11 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".PrayerViewActivity"
-            android:screenOrientation="user"></activity>
+
         <receiver
-            android:name="net.vorson.muhammadsufwan.prayertimesformuslim.util.TimeZoneChangedReceiver"
+            android:name=".util.TimeZoneChangedReceiver"
             android:enabled="true"
             android:exported="true" />
-
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -69,15 +70,34 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/secret_google_maps_api_key" />
 
-        <service
-            android:name=".sevices.FireBaseInstanceIdService">
+        <service android:name=".sevices.FireBaseInstanceIdService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="07d248c4082b57df00b2486c17f85f5aba5ae17a" />
+
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".settingsAndPreferences.SettingsActivity" />
+        <activity android:name=".ShowPrayAlarmActivity"></activity>
+
+        <receiver android:name=".scheduler.PassiveLocationChangedReceiver" />
+        <receiver android:name=".scheduler.SalaatAlarmReceiver" />
+        <receiver android:name=".scheduler.RamadanAlarmReceiver" />
+        <receiver android:name=".scheduler.SalaatBootReceiver" android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".scheduler.SalaatSchedulingService" />
+
     </application>
+
 </manifest>

@@ -26,7 +26,7 @@ package net.vorson.muhammadsufwan.prayertimesformuslim.util;
 
 
 import android.content.Context;
-
+import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -136,7 +136,7 @@ public class PrayTime {
     offsets[5] = 0;
     offsets[6] = 0;
 
-    /*
+    /**
      *
      * fa : fajr angle ms : maghrib selector (0 = angle; 1 = minutes after
      * sunset) mv : maghrib parameter value (in angle or minutes) is : isha
@@ -287,8 +287,7 @@ public class PrayTime {
 
     double B = 2 - A + Math.floor(A / 4.0);
 
-    double JD = Math.floor(365.25 * (year + 4716))
-        + Math.floor(30.6001 * (month + 1)) + day + B - 1524.5;
+    double JD = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + B - 1524.5;
 
     return JD;
   }
@@ -378,8 +377,7 @@ public class PrayTime {
 
   // -------------------- Interface Functions --------------------
   // return prayer times for a given date
-  private ArrayList<String> getDatePrayerTimes(int year, int month, int day,
-                                               double latitude, double longitude, double tZone) {
+  private ArrayList<String> getDatePrayerTimes(int year, int month, int day, double latitude, double longitude, double tZone) {
     this.setLat(latitude);
     this.setLng(longitude);
     this.setTimeZone(tZone);
@@ -390,8 +388,7 @@ public class PrayTime {
   }
 
   // return prayer times for a given date
-  public ArrayList<String> getPrayerTimes(Calendar date, double latitude,
-                                          double longitude, double tZone) {
+  public ArrayList<String> getPrayerTimes(Calendar date, double latitude, double longitude, double tZone) {
 
     int year = date.get(Calendar.YEAR);
     int month = date.get(Calendar.MONTH);
@@ -673,9 +670,10 @@ public class PrayTime {
   }
 
   /**
-   * @param args
+   * @param args this main class for caecking
    */
   public static void main(String[] args) {
+
     double latitude = 25.008781;
     double longitude = 67.0618058;
 
@@ -688,13 +686,14 @@ public class PrayTime {
     //Get offset from UTC, accounting for DST
     int defaultTzOffsetMs = defaultCalc.get(Calendar.ZONE_OFFSET) + defaultCalc.get(Calendar.DST_OFFSET);
     double timezone = defaultTzOffsetMs / (1000 * 60 * 60);
+
     // Test Prayer times here
     PrayTime prayers = new PrayTime();
 
-    prayers.setTimeFormat(prayers.TIME_12);
-    prayers.setCalcMethod(prayers.KARACHI);
-    prayers.setAsrJuristic(prayers.HANAFI);
-    prayers.setAdjustHighLats(prayers.ANGLE_BASED);
+    prayers.setTimeFormat(PrayTime.TIME_12);
+    prayers.setCalcMethod(PrayTime.KARACHI);
+    prayers.setAsrJuristic(PrayTime.HANAFI);
+    prayers.setAdjustHighLats(PrayTime.ANGLE_BASED);
 
     int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
     prayers.tune(offsets);
@@ -750,8 +749,7 @@ public class PrayTime {
     Calendar cal = Calendar.getInstance();
     cal.setTime(now);
 
-    ArrayList<String> prayerTimes = prayers.getPrayerTimes(cal,
-        latitude, longitude, timezone);
+    ArrayList<String> prayerTimes = prayers.getPrayerTimes(cal, latitude, longitude, timezone);
     ArrayList<String> prayerNames = prayers.getTimeNames();
     LinkedHashMap<String, String> result = new LinkedHashMap<>();
 
@@ -846,4 +844,5 @@ public class PrayTime {
   public ArrayList<String> getTimeNames() {
     return timeNames;
   }
+
 }

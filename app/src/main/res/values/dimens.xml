@@ -29,10 +29,22 @@
     <dimen name="msg_text_secondary">14sp</dimen>
     <dimen name="icon_star">25dp</dimen>
     <dimen name="icon_text">22sp</dimen>
+    <dimen name="defual_text_size">16sp</dimen>
     <dimen name="timestamp">12sp</dimen>
 
     <dimen name="three_grid_unit">24dp</dimen>
 
     <dimen name="one_and_a_half_grid_unit">12dp</dimen>
+
+
+    <dimen name="space_half">4dp</dimen>
+    <dimen name="space">8dp</dimen>
+    <dimen name="space_x2">16dp</dimen>
+    <dimen name="space_x3">24dp</dimen>
+    <dimen name="space_x4">32dp</dimen>
+    <dimen name="space_x5">40dp</dimen>
+    <dimen name="space_x6">48dp</dimen>
+    <dimen name="min_card_height">384dp</dimen>
+    <dimen name="card_width">320dp</dimen>
 
 </resources>

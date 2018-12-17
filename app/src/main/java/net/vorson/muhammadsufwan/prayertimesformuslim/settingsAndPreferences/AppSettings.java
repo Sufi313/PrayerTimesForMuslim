@@ -1,32 +1,13 @@
-package net.vorson.muhammadsufwan.prayertimesformuslim.util;
+package net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.format.DateFormat;
 
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.PrayTime;
+
 import java.lang.ref.WeakReference;
 
-/*
- * A Singleton for managing your SharedPreferences.
- *
- * You should make sure to change the SETTINGS_NAME to what you want
- * and choose the operating made that suits your needs, the default is
- * MODE_PRIVATE.
- *
- * IMPORTANT: The class is not thread safe. It should work fine in most 
- * circumstances since the write and read operations are fast. However
- * if you call edit for bulk updates and do not commit your changes
- * there is a possibility of data loss if a background thread has modified
- * preferences at the same time.
- * 
- * Usage:
- * 
- * int sampleInt = AppSettings.getInstance(context).getInt(Key.SAMPLE_INT);
- * AppSettings.getInstance(context).set(Key.SAMPLE_INT, sampleInt);
- * 
- * If AppSettings.getInstance(Context) has been called once, you can 
- * simple use AppSettings.getInstance() to save some precious line space.
- */
 public class AppSettings {
   public static final PrayTime sDefaults = new PrayTime();
 

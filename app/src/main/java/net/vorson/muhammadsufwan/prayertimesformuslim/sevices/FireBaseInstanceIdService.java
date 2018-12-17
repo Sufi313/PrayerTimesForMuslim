@@ -10,7 +10,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import net.vorson.muhammadsufwan.prayertimesformuslim.PrayerViewActivity;
+import net.vorson.muhammadsufwan.prayertimesformuslim.HomeActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 
 import androidx.core.app.NotificationCompat;
@@ -49,7 +49,7 @@ public class FireBaseInstanceIdService extends FirebaseMessagingService {
 
     private void sendNotification(String body){
 
-        Intent intent = new Intent(this,PrayerViewActivity.class);
+        Intent intent = new Intent(this,HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pi = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
