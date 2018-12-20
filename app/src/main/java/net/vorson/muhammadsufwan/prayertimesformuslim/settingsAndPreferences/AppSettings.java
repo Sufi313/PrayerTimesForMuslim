@@ -22,14 +22,7 @@ public class AppSettings {
    * Class for keeping all the keys used for shared preferences in one place.
    */
   public static class Key {
-    /* Recommended naming convention:
-     * ints, floats, doubles, longs:
-	   * SAMPLE_NUM or SAMPLE_COUNT or SAMPLE_INT, SAMPLE_LONG etc.
-	   *
-	   * boolean: IS_SAMPLE, HAS_SAMPLE, CONTAINS_SAMPLE
-	   * 
-	   * String: SAMPLE_KEY, SAMPLE_STR or just SAMPLE
-	   */
+
     //ALARM RELATED
     public static final String IS_ALARM_SET = "is_alarm_set_for_%d";
     public static final String IS_FAJR_ALARM_SET = "is_fajr_alarm_set_for_%d";
@@ -117,16 +110,6 @@ public class AppSettings {
     doCommit();
   }
 
-  /**
-   * Convenience method for storing doubles.
-   * <p/>
-   * There may be instances where the accuracy of a double is desired.
-   * SharedPreferences does not handle doubles so they have to
-   * cast to and from String.
-   *
-   * @param key The name of the preference to store.
-   * @param val The new value for the preference.
-   */
   public void set(String key, double val) {
     doEdit();
     mEditor.putString(key, String.valueOf(val));
@@ -139,10 +122,6 @@ public class AppSettings {
     doCommit();
   }
 
-  public String getString(String key, String defaultValue) {
-    return mPref.getString(key, defaultValue);
-  }
-
   public String getString(String key) {
     return mPref.getString(key, null);
   }
@@ -151,48 +130,38 @@ public class AppSettings {
     return mPref.getInt(key, 0);
   }
 
-  public int getInt(String key, int defaultValue) {
-    return mPref.getInt(key, defaultValue);
-  }
-
   public long getLong(String key) {
     return mPref.getLong(key, 0);
-  }
-
-  public long getLong(String key, long defaultValue) {
-    return mPref.getLong(key, defaultValue);
   }
 
   public float getFloat(String key) {
     return mPref.getFloat(key, 0);
   }
 
-  public float getFloat(String key, float defaultValue) {
-    return mPref.getFloat(key, defaultValue);
-  }
-
-  /**
-   * Convenience method for retrieving doubles.
-   * <p/>
-   * There may be instances where the accuracy of a double is desired.
-   * SharedPreferences does not handle doubles so they have to
-   * cast to and from String.
-   *
-   * @param key The name of the preference to fetch.
-   */
   public double getDouble(String key) {
     return getDouble(key, 0);
   }
 
-  /**
-   * Convenience method for retrieving doubles.
-   * <p/>
-   * There may be instances where the accuracy of a double is desired.
-   * SharedPreferences does not handle doubles so they have to
-   * cast to and from String.
-   *
-   * @param key The name of the preference to fetch.
-   */
+  public boolean getBoolean(String key) {
+    return mPref.getBoolean(key, false);
+  }
+
+  public String getString(String key, String defaultValue) {
+    return mPref.getString(key, defaultValue);
+  }
+
+  public int getInt(String key, int defaultValue) {
+    return mPref.getInt(key, defaultValue);
+  }
+
+  public long getLong(String key, long defaultValue) {
+    return mPref.getLong(key, defaultValue);
+  }
+
+  public float getFloat(String key, float defaultValue) {
+    return mPref.getFloat(key, defaultValue);
+  }
+
   public double getDouble(String key, double defaultValue) {
     try {
       return Double.valueOf(mPref.getString(key, String.valueOf(defaultValue)));
@@ -203,10 +172,6 @@ public class AppSettings {
 
   public boolean getBoolean(String key, boolean defaultValue) {
     return mPref.getBoolean(key, defaultValue);
-  }
-
-  public boolean getBoolean(String key) {
-    return mPref.getBoolean(key, false);
   }
 
   /**
@@ -266,37 +231,49 @@ public class AppSettings {
   public void setAlarmFor(int index, boolean alarmOn) {
     set(getKeyFor(Key.IS_ALARM_SET, index), alarmOn);
   }
-
-  public int getCalcMethodSetFor(int index) {
-    return getInt(getKeyFor(Key.CALC_METHOD, index), PrayTime.MWL);
-  }
-
+//  SET AND GET CALCULATION METHODS
   public void setCalcMethodFor(int index, int value) {
     set(getKeyFor(Key.CALC_METHOD, index), value);
-  }
-
-  public int getAsrMethodSetFor(int index) {
-    return getInt(String.format(Key.ASR_METHOD, index), PrayTime.SHAFII);
   }
 
   public void setAsrMethodFor(int index, int value) {
     set(getKeyFor(Key.ASR_METHOD, index), value);
   }
 
-  public int getHighLatitudeAdjustmentFor(int index) {
-    return getInt(getKeyFor(Key.ADJUST_METHOD, index), PrayTime.ONE_SEVENTH);
-  }
-
   public void setHighLatitudeAdjustmentMethodFor(int index, int value) {
     set(getKeyFor(Key.ADJUST_METHOD, index), value);
+  }
+
+  public void setTimeFormatFor(int index, int format) {
+    set(getKeyFor(Key.TIME_FORMAT, index), format);
+  }
+
+  public int getCalcMethodSetFor(int index) {
+    return getInt(getKeyFor(Key.CALC_METHOD, index), PrayTime.MWL);
+  }
+
+  public int getAsrMethodSetFor(int index) {
+    return getInt(String.format(Key.ASR_METHOD, index), PrayTime.SHAFII);
+  }
+
+  public int getHighLatitudeAdjustmentFor(int index) {
+    return getInt(getKeyFor(Key.ADJUST_METHOD, index), PrayTime.ONE_SEVENTH);
   }
 
   public int getTimeFormatFor(int index) {
     return getInt(getKeyFor(Key.TIME_FORMAT, index), DateFormat.is24HourFormat(mContextRef.get())? PrayTime.TIME_24 : PrayTime.TIME_12);
   }
 
-  public void setTimeFormatFor(int index, int format) {
-    set(getKeyFor(Key.TIME_FORMAT, index), format);
+  /*********************************************************/
+
+//  SET AND GET LOCATION VALUES
+
+  public void setLatFor(int index, double lat) {
+    set(getKeyFor(Key.LAT_FOR, index), lat);
+  }
+
+  public void setLngFor(int index, double lng) {
+    set(getKeyFor(Key.LNG_FOR, index), lng);
   }
 
   public double getLatFor(int index) {
@@ -307,15 +284,7 @@ public class AppSettings {
     return getDouble(getKeyFor(Key.LNG_FOR, index));
   }
 
-
-  public void setLatFor(int index, double lat) {
-    set(getKeyFor(Key.LAT_FOR, index), lat);
-  }
-
-  public void setLngFor(int index, double lng) {
-    set(getKeyFor(Key.LNG_FOR, index), lng);
-  }
-
+/****************************************************/
   public boolean isDefaultSet() {
     return getBoolean(Key.HAS_DEFAULT_SET);
   }

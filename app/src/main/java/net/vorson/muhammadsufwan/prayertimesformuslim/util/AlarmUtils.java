@@ -17,13 +17,13 @@ import java.util.Map;
 public class AlarmUtils {
 
   public static Uri getRandomRingtone(Context context) {
-    Uri alert = null;
+    Uri alert;
     RingtoneManager ringtoneManager = new RingtoneManager(context);
     ringtoneManager.setType(RingtoneManager.TYPE_ALARM);
     int count = ringtoneManager.getCursor().getCount();
     int attempts = 0;
     do {
-      int random = (int) Math.random() * (count + 1);
+      int random = (int) (Math.random() * (count + 1));
       alert = ringtoneManager.getRingtoneUri(random);
     } while (alert == null && ++attempts < 5);
     return alert;
@@ -44,8 +44,7 @@ public class AlarmUtils {
   }
 
   public static int getAlarmVolumeFromPercentage(AudioManager audioManager, int audioStream, float percentage) {
-    int volume = (int) Math.ceil((double) audioManager.getStreamMaxVolume(audioStream) * (percentage / 100.0d));
-    return volume;
+    return (int) Math.ceil((double) audioManager.getStreamMaxVolume(audioStream) * (percentage / 100.0d));
   }
 
   public static Map<String, Uri> getRingtones(Activity activity) {

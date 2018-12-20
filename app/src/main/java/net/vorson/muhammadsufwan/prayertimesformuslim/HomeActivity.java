@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayout;
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.CompassFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.ViewPagerAdapter;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.PrayerTimeFragment;
-import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.QiblaFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.SettingsActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
@@ -28,7 +27,6 @@ public class HomeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
 
     private PrayerTimeFragment prayerTimeFragment;
-    private QiblaFragment kaabaLocatorFragment;
     private CompassFragment compassFragment;
 
     @Override
@@ -88,10 +86,8 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         prayerTimeFragment = new PrayerTimeFragment();
-        kaabaLocatorFragment = new QiblaFragment();
         compassFragment = new CompassFragment();
         adapter.addFragment(prayerTimeFragment, "Pray Times");
-        adapter.addFragment(kaabaLocatorFragment, "Qibla");
         adapter.addFragment(compassFragment, "Compass");
         viewPager.setAdapter(adapter);
     }

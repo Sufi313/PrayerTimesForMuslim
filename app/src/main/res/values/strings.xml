@@ -148,11 +148,11 @@
     <string name="intro_pager">You can add as many cities as you want</string>
     <string name="intro_config">By swiping up/down you can access to monthly view and the city settings.</string>
     <string name="intro_config2">By pressing the Alarm Icon in the menu you can access the notification settigs to configure Adhan.</string>
-    <string name="compass_type_reminder">Click here to try different methods of finding the correct Qibla direction.</string>
+
     <string name="autoLocation">Auto Location</string>
     <string name="stop">Stop</string>
 
-    <string name="secret_google_maps_api_key"></string>
+    <string name="secret_google_maps_api_key">AIzaSyDG0_SYSa2bO3oPUmHQJIIUl4HbgJrbfaI</string>
     <string name="io_fabric_api_key">07d248c4082b57df00b2486c17f85f5aba5ae17a</string>
 
     <string name="kaaba">Kaaba</string>
