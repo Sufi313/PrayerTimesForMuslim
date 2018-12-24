@@ -35,7 +35,7 @@ public class SalaatSchedulingService extends IntentService implements Constants 
   // You can find a list of other Google domains with possible doodles here:
   // http://en.wikipedia.org/wiki/List_of_Google_domains
   private NotificationManager mNotificationManager;
-  NotificationCompat.Builder builder;
+  private NotificationCompat.Builder builder;
 
   @Override
   protected void onHandleIntent(Intent intent) {
@@ -64,16 +64,15 @@ public class SalaatSchedulingService extends IntentService implements Constants 
     PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
         new Intent(this, ShowPrayAlarmActivity.class), 0);
 
-    NotificationCompat.Builder mBuilder =
-        new NotificationCompat.Builder(this,NOTIFICATION_CHANEL_ID)
+    builder = new NotificationCompat.Builder(this,NOTIFICATION_CHANEL_ID)
             .setSmallIcon(R.drawable.ic_new_make)
             .setContentTitle(title)
             .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
             .setContentText(msg)
             .setAutoCancel(true);
 
-    mBuilder.setContentIntent(contentIntent);
-    mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    builder.setContentIntent(contentIntent);
+    mNotificationManager.notify(NOTIFICATION_ID, builder.build());
   }
 
 }

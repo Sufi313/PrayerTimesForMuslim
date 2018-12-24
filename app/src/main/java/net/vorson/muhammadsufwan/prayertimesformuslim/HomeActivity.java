@@ -17,6 +17,8 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.ViewPagerAdap
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.PrayerTimeFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.SettingsActivity;
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.GpsTracker;
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.PermissionUtils;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
 
 import java.util.Objects;
@@ -29,13 +31,19 @@ public class HomeActivity extends AppCompatActivity {
     private PrayerTimeFragment prayerTimeFragment;
     private CompassFragment compassFragment;
 
+    private AppSettings settings;
+    private GpsTracker gpsTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         ScreenUtils.lockOrientation(this);
 
-        AppSettings settings = AppSettings.getInstance(this);
+        PermissionUtils.get(this).needLocation(this);
+
+        settings = AppSettings.getInstance(this);
         if (!settings.getBoolean(AppSettings.Key.IS_INIT)) {
             settings.set(settings.getKeyFor(AppSettings.Key.IS_ALARM_SET,         0), true);
             settings.set(settings.getKeyFor(AppSettings.Key.IS_FAJR_ALARM_SET,    0), true);
@@ -45,6 +53,14 @@ public class HomeActivity extends AppCompatActivity {
             settings.set(settings.getKeyFor(AppSettings.Key.IS_ISHA_ALARM_SET,    0), true);
             settings.set(AppSettings.Key.USE_ADHAN, true);
             settings.set(AppSettings.Key.IS_INIT, true);
+        }
+
+        gpsTracker = new GpsTracker(this);
+        if (gpsTracker.canGetLocation()){
+            if (gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0){
+                settings.setLatFor(0,gpsTracker.getLatitude());
+                settings.setLngFor(0,gpsTracker.getLongitude());
+            }
         }
 
         Toolbar toolbar = findViewById(R.id.toolbarHome);

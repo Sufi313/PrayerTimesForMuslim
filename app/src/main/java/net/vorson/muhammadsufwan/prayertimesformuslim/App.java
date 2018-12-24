@@ -10,16 +10,15 @@ import android.os.Build;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.facebook.stetho.Stetho;
-import com.facebook.stetho.okhttp3.StethoInterceptor;
-
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.Prefs;
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.AndroidTimeZoneProvider;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.TimeZoneChangedReceiver;
+
+import org.joda.time.DateTimeZone;
 
 import java.util.Locale;
 
 import io.reactivex.annotations.NonNull;
-import okhttp3.OkHttpClient;
 
 
 public class App extends Application  {
@@ -36,8 +35,7 @@ public class App extends Application  {
         @Override
         public void uncaughtException(Thread thread, @NonNull Throwable ex) {
 //            AppRatingDialog.setInstalltionTime(0);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                    && ex.getClass().getName().contains("RemoteServiceException")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ex.getClass().getName().contains("RemoteServiceException")) {
                 if (ex.getMessage().contains("Couldn't update icon")) {
                     Prefs.setShowOngoingNumber(false);
                     Toast.makeText(App.get(), "Crash detected. Show ongoing number disabled...", Toast.LENGTH_LONG).show();
@@ -64,6 +62,7 @@ public class App extends Application  {
         sApp = this;
     }
 
+
     @NonNull
     public Handler getHandler() {
         return mHandler;
@@ -72,12 +71,14 @@ public class App extends Application  {
     @Override
     public void onCreate() {
         super.onCreate();
-        Stetho.initializeWithDefaults(this);
-        new OkHttpClient.Builder()
-                .addNetworkInterceptor(new StethoInterceptor())
-                .build();
+//        Stetho.initializeWithDefaults(this);
+//        new OkHttpClient.Builder()
+//                .addNetworkInterceptor(new StethoInterceptor())
+//                .build();
 
         mSystemLocale = Locale.getDefault();
+
+        DateTimeZone.setProvider(new AndroidTimeZoneProvider());
         registerReceiver(new TimeZoneChangedReceiver(), new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED));
 
     }
