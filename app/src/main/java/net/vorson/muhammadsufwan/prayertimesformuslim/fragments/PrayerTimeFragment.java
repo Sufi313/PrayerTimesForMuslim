@@ -27,6 +27,8 @@ import java.util.TimeZone;
 
 public class PrayerTimeFragment extends Fragment implements Constants {
 
+    private static final String TAG = PrayerTimeFragment.class.getSimpleName();
+
     int mIndex = 0;
     private GpsTracker gpsTracker;
     private double latitude;
@@ -99,7 +101,8 @@ public class PrayerTimeFragment extends Fragment implements Constants {
          maghrib.setText(prayerTimes.get("Maghrib"));
          isha.setText(prayerTimes.get("Isha"));
 
-         city.setText(getCompleteAddressString(settings.getLatFor(0), settings.getLngFor(0)));
+//         city.setText(getCompleteAddressString(settings.getLatFor(0), settings.getLngFor(0)));
+         city.setText(getLatitudeAndLongitudeFromGoogleMapForAddress("FARAH"));
 
     }
 
@@ -124,6 +127,35 @@ public class PrayerTimeFragment extends Fragment implements Constants {
             Toast.makeText(getActivity(), "No Address Found--->" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return strAdd;
+    }
+
+    public String getLatitudeAndLongitudeFromGoogleMapForAddress(String searchedAddress){
+
+        StringBuilder strAdd = new StringBuilder();
+        Geocoder coder = new Geocoder(getActivity());
+        List<Address> address;
+        try
+        {
+            address = coder.getFromLocationName(searchedAddress,5);
+            if (address == null) {
+                strAdd.append("Address not correct");
+                Log.d(TAG, "############Address not correct #########");
+            }
+            Address location = address.get(0);
+
+            Log.d(TAG, "Address Latitude : "+ location.getLatitude()+ "Address Longitude : "+ location.getLongitude());
+            strAdd.append(location.getLatitude());
+            strAdd.append(" ");
+            strAdd.append(location.getLongitude());
+
+        }
+        catch(Exception e)
+        {
+            Log.d(TAG, e.getMessage());
+
+        }
+
+        return strAdd.toString();
     }
 
 }

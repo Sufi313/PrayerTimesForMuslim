@@ -152,7 +152,7 @@
     <string name="autoLocation">Auto Location</string>
     <string name="stop">Stop</string>
 
-    <string name="secret_google_maps_api_key">AIzaSyDY572OP0ICcZC7M8gcBOVWByypgymP_f4</string>
+    <string name="secret_google_maps_api_key"></string>
     <string name="io_fabric_api_key">07d248c4082b57df00b2486c17f85f5aba5ae17a</string>
 
     <string name="kaaba">Kaaba</string>
