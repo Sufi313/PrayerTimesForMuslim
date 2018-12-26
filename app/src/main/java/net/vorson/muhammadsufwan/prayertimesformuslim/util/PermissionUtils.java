@@ -10,8 +10,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import net.vorson.muhammadsufwan.prayertimesformuslim.App;
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
-import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.Prefs;
+import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -34,6 +35,7 @@ public class PermissionUtils {
     public boolean pStorage;
     public boolean pLocation;
     public boolean pNotPolicy;
+    public AppSettings appSettings;
 
     private PermissionUtils(@NonNull Context c) {
         checkPermissions(c);
@@ -130,10 +132,11 @@ public class PermissionUtils {
 
 
     public void needCalendar(@NonNull final Activity act, boolean force) {
+        appSettings = AppSettings.getInstance(App.get());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && act.isDestroyed())
             return;
 
-        if (!pCalendar && (!"-1".equals(Prefs.getCalendar()) || force)) {
+        if (!pCalendar && (!"-1".equals(appSettings.getCalendar()) || force)) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(act);
 
@@ -182,8 +185,9 @@ public class PermissionUtils {
                     pCamera = grantResults[i] == PackageManager.PERMISSION_GRANTED;
                     break;
                 case Manifest.permission.WRITE_CALENDAR:
+                    appSettings = AppSettings.getInstance(App.get());
                     pCalendar = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                    if (!pCalendar) Prefs.setCalendar("-1");
+                    if (!pCalendar) appSettings.setCalendar(0,"-1");
                     break;
                 case Manifest.permission.ACCESS_NOTIFICATION_POLICY:
                     pNotPolicy = grantResults[i] == PackageManager.PERMISSION_GRANTED;

@@ -7,6 +7,9 @@ import android.text.format.DateFormat;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PrayTime;
 
 import java.lang.ref.WeakReference;
+import java.util.UUID;
+
+import io.reactivex.annotations.Nullable;
 
 public class AppSettings {
   public static final PrayTime sDefaults = new PrayTime();
@@ -38,6 +41,8 @@ public class AppSettings {
     public static final String SELECTED_RINGTONE = "ringtone_selected";
     public static final String SELECTED_RINGTONE_NAME = "ringtone_selected_name";
     public static final String USE_ADHAN = "use_adhan";
+    public static final String UUID = "uuid";
+    public static final String CALENDER_INTEGRATION = "calendarIntegration";
 
     //CONFIG RELATED
     public static final String HAS_DEFAULT_SET = "has_default_set";
@@ -61,7 +66,7 @@ public class AppSettings {
 
   private AppSettings(Context context) {
     mPref = context.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE);
-    mContextRef = new WeakReference<Context>(context);
+    mContextRef = new WeakReference<>(context);
   }
 
 
@@ -84,6 +89,16 @@ public class AppSettings {
     // Alternatively, you can create a new instance here
     // with something like this:
     // getInstance(MyCustomApplication.getAppContext());
+  }
+
+
+  public String getUUID() {
+    String uuid = mPref.getString(Key.UUID, null);
+    if (uuid == null) {
+      uuid = UUID.randomUUID().toString();
+      set(getKeyFor(Key.UUID, 0), uuid);
+    }
+    return uuid;
   }
 
   public void set(String key, String val) {
@@ -288,6 +303,15 @@ public class AppSettings {
   public boolean isDefaultSet() {
     return getBoolean(Key.HAS_DEFAULT_SET);
   }
+
+  public String getCalendar() {
+    return mPref.getString(Key.CALENDER_INTEGRATION, "-1");
+  }
+
+  public void setCalendar(int index, String cal) {
+    set(getKeyFor(Key.CALENDER_INTEGRATION, index), cal);
+  }
+
 
 
 }

@@ -16,8 +16,8 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.App
  */
 // BEGIN_INCLUDE(autostart)
 public class SalaatBootReceiver extends BroadcastReceiver {
+
   SalaatAlarmReceiver salaatAlarm = new SalaatAlarmReceiver();
-  RamadanAlarmReceiver ramadanAlarm = new RamadanAlarmReceiver();
 
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -27,9 +27,6 @@ public class SalaatBootReceiver extends BroadcastReceiver {
         salaatAlarm.setAlarm(context);
       }
 
-      if (AppSettings.getInstance(context).getBoolean(AppSettings.Key.IS_RAMADAN)) {
-        ramadanAlarm.setAlarm(context);
-      }
     } else if (action.equals("android.intent.action.TIMEZONE_CHANGED") ||
         action.equals("android.intent.action.TIME_SET") ||
         action.equals("android.intent.action.MY_PACKAGE_REPLACED")) {
@@ -40,10 +37,6 @@ public class SalaatBootReceiver extends BroadcastReceiver {
         salaatAlarm.setAlarm(context);
       }
 
-      if (AppSettings.getInstance(context).getBoolean(AppSettings.Key.IS_RAMADAN)) {
-        ramadanAlarm.cancelAlarm(context);
-        ramadanAlarm.setAlarm(context);
-      }
     }
   }
 }

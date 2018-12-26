@@ -6,11 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Handler;
-import android.widget.Toast;
-
-import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.Prefs;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.AndroidTimeZoneProvider;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.TimeZoneChangedReceiver;
 
@@ -28,24 +24,6 @@ public class App extends Application  {
 
     @NonNull
     private Handler mHandler = new Handler();
-
-    private Thread.UncaughtExceptionHandler mDefaultUEH;
-    @NonNull
-    private Thread.UncaughtExceptionHandler mCaughtExceptionHandler = new Thread.UncaughtExceptionHandler() {
-        @Override
-        public void uncaughtException(Thread thread, @NonNull Throwable ex) {
-//            AppRatingDialog.setInstalltionTime(0);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ex.getClass().getName().contains("RemoteServiceException")) {
-                if (ex.getMessage().contains("Couldn't update icon")) {
-                    Prefs.setShowOngoingNumber(false);
-                    Toast.makeText(App.get(), "Crash detected. Show ongoing number disabled...", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
-            // This will make Crashlytics do its job
-            mDefaultUEH.uncaughtException(thread, ex);
-        }
-    };
 
 
     @NonNull
