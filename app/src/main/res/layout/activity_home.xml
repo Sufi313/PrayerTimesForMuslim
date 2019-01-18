@@ -50,6 +50,7 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpagerHome"
+            android:layout_above="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tablayoutHome"
@@ -57,6 +58,16 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </androidx.viewpager.widget.ViewPager>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/bottom_nav_view"/>
 
     </RelativeLayout>
 

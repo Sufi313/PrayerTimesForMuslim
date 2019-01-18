@@ -266,6 +266,7 @@
 
     <string name="salaat_times">Salaat times</string>
     <string name="kaaba_position">Kaaba position</string>
+    <string name="qibla_position">Qibla</string>
 
     <string name="permission_write_external_required">
         Kaaba locator requires Google Maps which requires permission to write to external storage.\n\n
@@ -318,6 +319,8 @@
     <string name="search_city">Search City</string>
     <string name="enter_city_here">Enter City Here</string>
     <string name="next_prayer">Next Prayer</string>
+    <string name="prayer_time">Pray Times</string>
+    <string name="quran">Holy Quran</string>
 
 
 </resources>
