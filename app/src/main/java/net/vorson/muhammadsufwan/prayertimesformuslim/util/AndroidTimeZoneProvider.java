@@ -18,8 +18,6 @@ import io.reactivex.annotations.Nullable;
  * Created by Sufwan.Ansari on 13.12.2018.
  */
 
-
-
 public class AndroidTimeZoneProvider implements Provider {
     @NonNull
     private SimpleArrayMap<String, WeakReference<DateTimeZone>> cache = new SimpleArrayMap<>();

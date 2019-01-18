@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
+import net.vorson.muhammadsufwan.prayertimesformuslim.SerachCityActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.AlarmUtils;
 
@@ -22,12 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SettingsActivity extends AppCompatActivity implements Constants,
-        CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class SettingsActivity extends AppCompatActivity implements Constants, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     int mIndex = 0;
     AppSettings settings;
     private TextView setRingtoneTextView;
-    private LinearLayout mRingtone;
+    private LinearLayout mRingtone ,city;
 
     Map<String, Uri> mRingtonesMap;
     private Uri mLastSelectedRingtone = null;
@@ -45,6 +46,13 @@ public class SettingsActivity extends AppCompatActivity implements Constants,
 
         setRingtoneTextView = findViewById(R.id.ringtoneSelectedTV);
         mRingtone = findViewById(R.id.ringtoneSelectedLayout);
+        city = findViewById(R.id.citySelectedLayout);
+        city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this,SerachCityActivity.class));
+            }
+        });
 
         settings = AppSettings.getInstance(this);
         setupRingtoneSelection();

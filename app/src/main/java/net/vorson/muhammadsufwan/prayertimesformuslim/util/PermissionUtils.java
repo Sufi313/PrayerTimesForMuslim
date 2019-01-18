@@ -60,7 +60,6 @@ public class PermissionUtils {
 
         } else
             pNotPolicy = true;
-
     }
 
     public void needNotificationPolicy(@NonNull final Activity act) {

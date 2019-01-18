@@ -10,6 +10,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.widget.ArrayAdapter;
 
+import net.vorson.muhammadsufwan.prayertimesformuslim.R;
+
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -66,6 +68,7 @@ public class AlarmUtils {
   public static void getRingtonesDialog(Activity activity, Collection<String> items, int selected, DialogInterface.OnClickListener itemClickListener, DialogInterface.OnClickListener okClickListener, final DialogInterface.OnClickListener cancelClickListener) {
     AlertDialog.Builder builderSingle = new AlertDialog.Builder(activity);
     builderSingle.setTitle("Select Ringtone");
+
     final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(activity, android.R.layout.select_dialog_singlechoice);
     arrayAdapter.addAll(items);
 

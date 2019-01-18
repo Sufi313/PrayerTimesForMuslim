@@ -8,10 +8,20 @@
     <dimen name="space_fifteen">15dp</dimen>
     <dimen name="space_twenty">20dp</dimen>
     <dimen name="space_twentyfive">25dp</dimen>
-    <dimen name="space_thirty">30sp</dimen>
+    <dimen name="space_thirty">30dp</dimen>
     <dimen name="space_fourty">40dp</dimen>
     <dimen name="space_fifty">50dp</dimen>
     <dimen name="space_sixty">60dp</dimen>
+
+    <dimen name="text_five">5sp</dimen>
+    <dimen name="text_ten">10sp</dimen>
+    <dimen name="text_fifteen">15sp</dimen>
+    <dimen name="text_twenty">20sp</dimen>
+    <dimen name="text_twentyfive">25sp</dimen>
+    <dimen name="text_thirty">30sp</dimen>
+    <dimen name="text_fourty">40sp</dimen>
+    <dimen name="text_fifty">50sp</dimen>
+    <dimen name="text_sixty">60sp</dimen>
 
 
     <!-- dimensions -->
@@ -46,5 +56,7 @@
     <dimen name="space_x6">48dp</dimen>
     <dimen name="min_card_height">384dp</dimen>
     <dimen name="card_width">320dp</dimen>
+    <dimen name="space_houndred">100dp</dimen>
+    <dimen name="space_eighty">80dp</dimen>
 
 </resources>

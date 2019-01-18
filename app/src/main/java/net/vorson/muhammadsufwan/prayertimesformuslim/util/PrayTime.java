@@ -415,6 +415,7 @@ public class PrayTime {
   public void setFajrAngle(double angle) {
     double[] params = {angle, -1, -1, -1, -1};
     setCustomParams(params);
+
   }
 
   // set the angle for calculating Maghrib
@@ -674,18 +675,24 @@ public class PrayTime {
    */
   public static void main(String[] args) {
 
-    double latitude = 25.008781;
-    double longitude = 67.0618058;
+//    double latitude = 25.008781;
+//    double longitude = 67.0618058;
+
+    double latitude = -33.8473567;
+    double longitude = 150.6517896;
 
     //Get NY time zone instance
-    TimeZone defaultTz = TimeZone.getDefault();
 
+    TimeZone defaultTz = TimeZone.getDefault();
     //Get NY calendar object with current date/time
+    System.out.println(defaultTz);
     Calendar defaultCalc = Calendar.getInstance(defaultTz);
 
     //Get offset from UTC, accounting for DST
     int defaultTzOffsetMs = defaultCalc.get(Calendar.ZONE_OFFSET) + defaultCalc.get(Calendar.DST_OFFSET);
     double timezone = defaultTzOffsetMs / (1000 * 60 * 60);
+
+    System.out.println(timezone);
 
     // Test Prayer times here
     PrayTime prayers = new PrayTime();

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/space_ten"
+    android:paddingLeft="@dimen/space_ten"
+    android:paddingRight="@dimen/space_ten"
+    android:paddingTop="@dimen/space_ten"
+    android:orientation="vertical"
+    android:background="@drawable/bubble"
+    tools:context=".SerachCityActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/search_city"
+        android:textSize="@dimen/defual_text_size"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="@dimen/space_thirty"
+        android:hint="@string/enter_city_here"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_twenty"/>
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_ten"
+        />
+
+    <TextView
+        android:id="@+id/att"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_ten"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/transparent_color"
+        app:cardElevation="@dimen/space_ten"
+        android:padding="@dimen/space_ten">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_thirty"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_marginBottom="@dimen/space_ten">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="@string/fajr"
+                    android:textSize="@dimen/text_twenty"/>
+
+                <TextView
+                    android:id="@+id/searchCityFajr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:textSize="@dimen/text_twenty"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_thirty"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_marginBottom="@dimen/space_ten">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="@string/dhuhr"
+                    android:textSize="@dimen/text_twenty"/>
+
+                <TextView
+                    android:id="@+id/searchCityDhuhr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:textSize="@dimen/text_twenty"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_thirty"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_marginBottom="@dimen/space_ten">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="@string/asr"
+                    android:textSize="@dimen/text_twenty"/>
+
+                <TextView
+                    android:id="@+id/searchCityAsr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:textSize="@dimen/text_twenty"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_thirty"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_marginBottom="@dimen/space_ten">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="@string/maghrib"
+                    android:textSize="@dimen/text_twenty"/>
+
+                <TextView
+                    android:id="@+id/searchCityMaghrib"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:textSize="@dimen/text_twenty"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_thirty"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_marginBottom="@dimen/space_ten">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="@string/isha"
+                    android:textSize="@dimen/text_twenty"/>
+
+                <TextView
+                    android:id="@+id/searchCityIsha"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:textSize="@dimen/text_twenty"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"/>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/poweredBy"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:src="@drawable/powered_by_google_light"/>-->
+
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">PrayerTimesForMuslim</string>
+    <string name="app_name">صلاة المسلمين</string>
+    <!--<string name="app_name">Muslim Prayers</string>-->
     <string name="appwidget_text">UPCOMING PRAYER</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
@@ -152,7 +153,7 @@
     <string name="autoLocation">Auto Location</string>
     <string name="stop">Stop</string>
 
-    <string name="secret_google_maps_api_key"></string>
+    <string name="secret_google_maps_api_key">AIzaSyDY572OP0ICcZC7M8gcBOVWByypgymP_f4</string>
     <string name="io_fabric_api_key">07d248c4082b57df00b2486c17f85f5aba5ae17a</string>
 
     <string name="kaaba">Kaaba</string>
@@ -314,6 +315,9 @@
 
     <string name="title_terms_and_conditions">Terms and Conditions</string>
     <string name="action_accept">Accept</string>
+    <string name="search_city">Search City</string>
+    <string name="enter_city_here">Enter City Here</string>
+    <string name="next_prayer">Next Prayer</string>
 
 
 </resources>

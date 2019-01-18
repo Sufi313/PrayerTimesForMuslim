@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
+import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.swipeButton.OnStateChangeListener;
+import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.swipeButton.SwipeButton;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.AlarmUtils;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PrayTime;
@@ -33,9 +35,10 @@ import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class ShowPrayAlarmActivity extends AppCompatActivity implements Constants, View.OnClickListener, MediaPlayer.OnCompletionListener{
+public class ShowPrayAlarmActivity extends AppCompatActivity implements Constants, OnStateChangeListener, MediaPlayer.OnCompletionListener{
 
-    private Button mAlarmOff;
+
+    private SwipeButton mSwipeAlarmOff;
     private TextView mPrayerName;
     MediaPlayer mMediaPlayer = null;
     Runnable mAutoStop = null;
@@ -105,8 +108,9 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
             mPrayerName.setText(getString(R.string.prayer_name_time, mPrayerNameString));
         }
 
-        mAlarmOff = findViewById(R.id.alarm_off);
-        mAlarmOff.setOnClickListener(this);
+
+        mSwipeAlarmOff = findViewById(R.id.swipe_button);
+        mSwipeAlarmOff.setOnStateChangeListener(this);
 
         try {
             playAlarm();
@@ -155,7 +159,7 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
                 });
                 mMediaPlayer.setLooping(false);
                 mMediaPlayer.prepare();
-                mAlarmOff.postDelayed(mStartDua = new Runnable() {
+                mSwipeAlarmOff.postDelayed(mStartDua = new Runnable() {
                     @Override
                     public void run() {
                         mMediaPlayer.start();
@@ -167,13 +171,6 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
             }
         }
     }
-
-    @Override
-    public void onClick(View v) {
-        stopAlarm();
-        finish();
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -257,11 +254,11 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
     private void startAlarm() {
         mMediaPlayer.start();
 
-        mAlarmOff.postDelayed(mAutoStop = new Runnable() {
+        mSwipeAlarmOff.postDelayed(mAutoStop = new Runnable() {
             @Override
             public void run() {
                 sendNotification();
-                mAlarmOff.performClick();
+                mSwipeAlarmOff.performClick();
             }
         }, FIVE_MINUTES);
     }
@@ -287,12 +284,12 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
         }
 
         if (mAutoStop != null) {
-            mAlarmOff.removeCallbacks(mAutoStop);
+            mSwipeAlarmOff.removeCallbacks(mAutoStop);
             mAutoStop = null;
         }
 
         if (mStartDua != null) {
-            mAlarmOff.removeCallbacks(mStartDua);
+            mSwipeAlarmOff.removeCallbacks(mStartDua);
             mStartDua = null;
         }
 
@@ -342,6 +339,12 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+    @Override
+    public void onStateChange(boolean active) {
+        stopAlarm();
+        finish();
     }
 
 

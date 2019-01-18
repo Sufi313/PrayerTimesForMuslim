@@ -82,11 +82,13 @@
 
         <activity android:name=".HomeActivity" />
         <activity android:name=".settingsAndPreferences.SettingsActivity" />
-        <activity android:name=".ShowPrayAlarmActivity"></activity>
+        <activity android:name=".ShowPrayAlarmActivity" />
 
         <receiver android:name=".scheduler.PassiveLocationChangedReceiver" />
         <receiver android:name=".scheduler.SalaatAlarmReceiver" />
-        <receiver android:name=".scheduler.SalaatBootReceiver" android:enabled="false">
+        <receiver
+            android:name=".scheduler.SalaatBootReceiver"
+            android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
@@ -97,6 +99,7 @@
 
         <service android:name=".scheduler.SalaatSchedulingService" />
 
+        <activity android:name=".SerachCityActivity"></activity>
     </application>
 
 </manifest>
