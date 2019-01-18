@@ -35,11 +35,11 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="height" value="55" />
-                            <entry key="outputName" value="ic_alarm_off" />
+                            <entry key="height" value="60" />
+                            <entry key="outputName" value="ic_clock_two" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\muhammad.sufwan\Desktop\Svg(s)\002-alarm-1.svg" />
-                            <entry key="width" value="55" />
+                            <entry key="sourceFile" value="C:\Users\muhammad.sufwan\Desktop\prayer times icon\clock_two.svg" />
+                            <entry key="width" value="60" />
                           </map>
                         </option>
                       </PersistentState>
