@@ -33,10 +33,13 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_music_note" />
+                            <entry key="height" value="55" />
+                            <entry key="outputName" value="ic_alarm_off" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\muhammad.sufwan\Desktop\Svg(s)\settings.svg" />
+                            <entry key="sourceFile" value="C:\Users\muhammad.sufwan\Desktop\Svg(s)\002-alarm-1.svg" />
+                            <entry key="width" value="55" />
                           </map>
                         </option>
                       </PersistentState>
