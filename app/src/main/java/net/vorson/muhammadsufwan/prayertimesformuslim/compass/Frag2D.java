@@ -12,7 +12,7 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
-public class Frag2D extends Fragment implements CompassFragment.MyCompassListener {
+public class Frag2D extends Fragment implements QiblaActivity.MyCompassListener {
 
     private CompassView mCompassView;
     private TextView mAngle;
@@ -42,9 +42,9 @@ public class Frag2D extends Fragment implements CompassFragment.MyCompassListene
     @Override
     public void onUpdateDirection() {
         if (mCompassView != null) {
-            mCompassView.setQiblaAngle((int) ((CompassFragment) getParentFragment()).getQiblaAngle());
+            mCompassView.setQiblaAngle((int) ((QiblaActivity)getActivity()).getQiblaAngle());
             mAngle.setText(Math.round(mCompassView.getQiblaAngle()) + "°");
-            mDist.setText(Math.round(((CompassFragment) getParentFragment()).getDistance()) + "km");
+            mDist.setText(Math.round(((QiblaActivity)getActivity()).getDistance()) + "km");
         }
     }
 
@@ -52,8 +52,8 @@ public class Frag2D extends Fragment implements CompassFragment.MyCompassListene
     public void onUpdateSensors(float[] rot) {
         if (mCompassView != null && getActivity() != null) {
             mCompassView.setAngle(rot[0]);
-            mGravity = LowPassFilter.filter(((CompassFragment) getParentFragment()).mMagAccel.mAccelVals, mGravity);
-            mGeo = LowPassFilter.filter(((CompassFragment) getParentFragment()).mMagAccel.mMagVals, mGeo);
+            mGravity = LowPassFilter.filter(((QiblaActivity)getActivity()).mMagAccel.mAccelVals, mGravity);
+            mGeo = LowPassFilter.filter(((QiblaActivity)getActivity()).mMagAccel.mMagVals, mGeo);
 
             if ((mGravity != null) && (mGeo != null)) {
                 float[] R = new float[9];

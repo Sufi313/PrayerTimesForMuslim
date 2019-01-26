@@ -24,9 +24,9 @@ public class CompassView extends View {
     public CompassView(@NonNull Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mKaabe = context.getResources().getDrawable(R.drawable.kaabe, null);
+            mKaabe = context.getResources().getDrawable(R.drawable.ic_kaaba_mecca, null);
         } else {
-            mKaabe = context.getResources().getDrawable(R.drawable.kaabe);
+            mKaabe = context.getResources().getDrawable(R.drawable.ic_kaaba_mecca);
         }
 
     }
@@ -51,14 +51,15 @@ public class CompassView extends View {
         mPath.setFillType(Path.FillType.EVEN_ODD);
         mPath.moveTo(center, center / 8);
 
-        mPath.lineTo((center * 15) / 20, center / 3);
+        mPath.lineTo((center * 30) / 25, center / 3);
 
-        mPath.lineTo(center, center / 4);
+        mPath.lineTo(center, center / 5);
 
-        mPath.lineTo((center * 25) / 20, center / 3);
+        mPath.lineTo((center * 25) / 30, center / 3);
         mPath.close();
 
         setMeasuredDimension(size, size);
+
     }
 
     @Override
@@ -69,10 +70,10 @@ public class CompassView extends View {
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setAntiAlias(true);
 
-        mPaint.setStrokeWidth(center / 15);
+        mPaint.setStrokeWidth(center / 50);
 
-        mPaint.setColor(Color.WHITE);
-        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mPaint.setColor(Color.parseColor("#001931"));
+        mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawCircle(center, center, (center * 19) / 20, mPaint);
         mPaint.setStyle(Paint.Style.STROKE);
 
@@ -80,12 +81,12 @@ public class CompassView extends View {
         canvas.drawCircle(center, center, (center * 19) / 20, mPaint);
         mPaint.setStrokeWidth(1);
 
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(Color.parseColor("#001931"));
 
-        mPaint.setTextSize((center * 2) / 5);
+        mPaint.setTextSize((center * 2) / 8);
 
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawText(Math.round(getAngle()) + "°", center, center + (center / 5), mPaint);
+        canvas.drawText(Math.round(getAngle()) + "°", center, center + (center / 8), mPaint);
         mPaint.setStyle(Paint.Style.STROKE);
 
         canvas.rotate(-mAngle, center, center);
@@ -110,7 +111,7 @@ public class CompassView extends View {
             mKaabe.setBounds(center - size, y - size, center + size, y + size);
             mKaabe.draw(canvas);
 
-            mPaint.setColor(Color.BLACK);
+            mPaint.setColor(Color.parseColor("#001931"));
 
             mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
             canvas.drawPath(mPath, mPaint);

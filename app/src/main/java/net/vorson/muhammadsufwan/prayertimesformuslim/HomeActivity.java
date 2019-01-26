@@ -1,5 +1,6 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
@@ -10,9 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import net.vorson.muhammadsufwan.prayertimesformuslim.compass.CompassFragment;
+import net.vorson.muhammadsufwan.prayertimesformuslim.compass.QiblaActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.ViewPagerAdapter;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.PrayerTimeFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
@@ -29,7 +31,6 @@ public class HomeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
 
     private PrayerTimeFragment prayerTimeFragment;
-    private CompassFragment compassFragment;
 
     private AppSettings settings;
     private GpsTracker gpsTracker;
@@ -68,6 +69,25 @@ public class HomeActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Objects.requireNonNull(getSupportActionBar()).setTitle("");
         }
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home_view:
+                        break;
+                    case R.id.action_qibla_view:
+                        startActivity(new Intent(HomeActivity.this, QiblaActivity.class));
+                        break;
+                    case R.id.action_quran_view:
+                        break;
+                }
+                return false;
+            }
+        });
 
         //Initializing viewPager
         viewPager = findViewById(R.id.viewpagerHome);
@@ -102,9 +122,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         prayerTimeFragment = new PrayerTimeFragment();
-        compassFragment = new CompassFragment();
         adapter.addFragment(prayerTimeFragment, "Pray Times");
-        adapter.addFragment(compassFragment, "Compass");
         viewPager.setAdapter(adapter);
     }
 

@@ -153,7 +153,7 @@
     <string name="autoLocation">Auto Location</string>
     <string name="stop">Stop</string>
 
-    <string name="secret_google_maps_api_key">AIzaSyDY572OP0ICcZC7M8gcBOVWByypgymP_f4</string>
+    <string name="secret_google_maps_api_key"></string>
     <string name="io_fabric_api_key">07d248c4082b57df00b2486c17f85f5aba5ae17a</string>
 
     <string name="kaaba">Kaaba</string>
@@ -322,5 +322,18 @@
     <string name="prayer_time">Pray Times</string>
     <string name="quran">Holy Quran</string>
 
+    <!-- Hijri Month Names -->
+    <string name="hijriMonth1">Muharram</string>
+    <string name="hijriMonth2">Safar</string>
+    <string name="hijriMonth3">Rabi\' al-Awwal</string>
+    <string name="hijriMonth4">Rabi\' al-Akhir</string>
+    <string name="hijriMonth5">Jumada al-Ula</string>
+    <string name="hijriMonth6">Jumada al-Akhira</string>
+    <string name="hijriMonth7">Rajab</string>
+    <string name="hijriMonth8">Sha\'ban</string>
+    <string name="hijriMonth9">Ramadan</string>
+    <string name="hijriMonth10">Shawwal</string>
+    <string name="hijriMonth11">Dhu al-Qa\'dah</string>
+    <string name="hijriMonth12">Dhu al-Hijjah</string>
 
 </resources>

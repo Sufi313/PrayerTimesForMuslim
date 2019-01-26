@@ -1,7 +1,8 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim.compass;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Location;
@@ -9,13 +10,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import net.vorson.muhammadsufwan.prayertimesformuslim.HomeActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.classes.OrientationCalculator;
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.classes.OrientationCalculatorImpl;
@@ -24,15 +28,14 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.compass.classes.rotation.M
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.classes.rotation.RotationUpdateDelegate;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.GpsTracker;
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
 
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
 
-
-public class CompassFragment extends Fragment implements LocationListener, RotationUpdateDelegate {
+public class QiblaActivity extends AppCompatActivity implements LocationListener, RotationUpdateDelegate {
 
     private double mQAngle;
     private float mDist;
@@ -51,6 +54,78 @@ public class CompassFragment extends Fragment implements LocationListener, Rotat
     private Frag2D mFrag2D;
     private Location mLocation;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ScreenUtils.lockOrientation(this);
+        setContentView(R.layout.activity_qibla);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationQibla);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@androidx.annotation.NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home_view:
+                        startActivity(new Intent(QiblaActivity.this, HomeActivity.class));
+                        break;
+                    case R.id.action_qibla_view:
+
+                        break;
+                    case R.id.action_quran_view:
+                        break;
+                }
+                return false;
+            }
+        });
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        mDisplayRotation = display.getRotation();
+
+        // sensor listeners
+        mMagAccel = new MagAccelListener(this);
+
+        mFrag2D = new Frag2D();
+        mList = mFrag2D;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frag2D, mFrag2D, "2d");
+        fragmentTransaction.commit();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorManager.unregisterListener(mMagAccel);
+
+        mSensorManager.registerListener(mMagAccel, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+        mSensorManager.registerListener(mMagAccel, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
+
+        gpsTracker = new GpsTracker(this);
+        if (gpsTracker.canGetLocation()) {
+            Location lastKnownLocation = gpsTracker.getLocation();
+            if (lastKnownLocation != null) {
+                calcQiblaAngel(lastKnownLocation);
+            }
+        } else {
+            AppSettings appSettings = AppSettings.getInstance();
+            if (appSettings.getLatFor(0) != 0) {
+                Location loc = new Location("custom");
+                loc.setLatitude(appSettings.getLatFor(0));
+                loc.setLongitude(appSettings.getLngFor(0));
+                calcQiblaAngel(loc);
+            } else {
+                Toast.makeText(this, "There is no location found", Toast.LENGTH_SHORT).show();
+                gpsTracker.showSettingsAlert();
+            }
+        }
+
+    }
 
     public Location getLocation() {
         return mLocation;
@@ -64,67 +139,9 @@ public class CompassFragment extends Fragment implements LocationListener, Rotat
         return mQAngle;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@androidx.annotation.NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.compass_main, container, false);
-        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-
-
-        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        mDisplayRotation = display.getRotation();
-
-        // sensor listeners
-        mMagAccel = new MagAccelListener(this);
-
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        mFrag2D = new Frag2D();
-        mList = mFrag2D;
-        fragmentTransaction.add(R.id.frag2D, mFrag2D, "2d");
-        fragmentTransaction.commit();
-
-        return v;
-    }
-
-    @Override
-    public void onSaveInstanceState(@androidx.annotation.NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @SuppressLint("MissingPermission")
-    @Override
-    public void onResume() {
-        super.onResume();
-        mSensorManager.unregisterListener(mMagAccel);
-
-        mSensorManager.registerListener(mMagAccel, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
-        mSensorManager.registerListener(mMagAccel, mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
-
-        gpsTracker = new GpsTracker(getActivity());
-        if (gpsTracker.canGetLocation()) {
-            Location lastKnownLocation = gpsTracker.getLocation();
-            if (lastKnownLocation != null) {
-                calcQiblaAngel(lastKnownLocation);
-            }
-        }else{
-            AppSettings appSettings = AppSettings.getInstance();
-            if (appSettings.getLatFor(0) != 0) {
-                Location loc = new Location("custom");
-                loc.setLatitude(appSettings.getLatFor(0));
-                loc.setLongitude(appSettings.getLngFor(0));
-                calcQiblaAngel(loc);
-            } else {
-                Toast.makeText(getActivity(), "There is no location found", Toast.LENGTH_SHORT).show();
-                gpsTracker.showSettingsAlert();
-            }
-        }
-
-    }
-
     @Override
     public void onPause() {
-        LocationManager locMan = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locMan.removeUpdates(this);
         super.onPause();
     }
@@ -161,11 +178,10 @@ public class CompassFragment extends Fragment implements LocationListener, Rotat
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        if (getActivity() != null && (System.currentTimeMillis() - location.getTime()) < (mOnlyNew ? (1000 * 60) : (1000 * 60 * 60 * 24))) {
-            LocationManager locMan = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if ((System.currentTimeMillis() - location.getTime()) < (mOnlyNew ? (1000 * 60) : (1000 * 60 * 60 * 24))) {
+            LocationManager locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locMan.removeUpdates(this);
         }
-
     }
 
     private void calcQiblaAngel(@NonNull Location location) {
@@ -208,11 +224,9 @@ public class CompassFragment extends Fragment implements LocationListener, Rotat
     public void onProviderDisabled(String provider) {
     }
 
-
     public interface MyCompassListener {
         void onUpdateDirection();
 
         void onUpdateSensors(float[] rot);
     }
-
 }

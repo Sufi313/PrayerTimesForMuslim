@@ -32,6 +32,7 @@
         android:roundIcon="@drawable/ic_new_make"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
+        <activity android:name=".compass.QiblaActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="user">
@@ -99,7 +100,7 @@
 
         <service android:name=".scheduler.SalaatSchedulingService" />
 
-        <activity android:name=".SerachCityActivity"></activity>
+        <activity android:name=".SerachCityActivity" />
     </application>
 
 </manifest>

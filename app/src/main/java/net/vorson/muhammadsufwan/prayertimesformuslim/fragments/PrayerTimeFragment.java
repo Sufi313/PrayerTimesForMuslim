@@ -1,21 +1,15 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim.fragments;
 
-import android.icu.util.TimeZone;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
@@ -29,25 +23,31 @@ import org.joda.time.chrono.IslamicChronology;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import androidx.fragment.app.Fragment;
 
 public class PrayerTimeFragment extends Fragment implements Constants {
 
     private static final String TAG = PrayerTimeFragment.class.getSimpleName();
-    private static final String FULL_DATE_PATTERN = "EEE dd MMMM YYYY";
+    private static final String FULL_DATE_PATTERN = "dd MMMM YYYY";
     private static final DateTimeFormatter FULL_DATE_FORMATTTER = DateTimeFormat.forPattern(FULL_DATE_PATTERN);
+    private Timer timer;
+    private TimerTask timerTask;
+    private TextView fajr;
+    private TextView sunrise;
+    private TextView dhuhr;
+    private TextView asr;
+    private TextView maghrib;
+    private TextView isha;
+    private TextView remainingPrayTimeTv;
+    private TextView remainingPrayNameTv;
 
-    int mIndex = 0;
-    private GpsTracker gpsTracker;
-    private double latitude;
-    private double longitude;
+    private int mIndex = 0;
 
     public PrayerTimeFragment() {
         // Required empty public constructor
@@ -77,48 +77,43 @@ public class PrayerTimeFragment extends Fragment implements Constants {
         return view;
     }
 
-     protected void init(View view) {
-        // In future releases we will add more cards.
-        // Then we'll need to do this for each card.
-        // For now it's included in the layout which
-        // makes it easier to work with the layout editor.
-        // inflater.inflate(R.layout.view_prayer_times, timesContainer, true);
-
-        // Toolbar will now take on default Action Bar characteristics
+    protected void init(View view) {
 
         AppSettings settings = AppSettings.getInstance(getActivity());
 
-        settings.setCalcMethodFor(mIndex,PrayTime.KARACHI);
-        settings.setAsrMethodFor(mIndex,PrayTime.HANAFI);
-        settings.setTimeFormatFor(mIndex,PrayTime.TIME_12);
-        settings.setHighLatitudeAdjustmentMethodFor(mIndex,PrayTime.NONE);
+        settings.setCalcMethodFor(mIndex, PrayTime.KARACHI);
+        settings.setAsrMethodFor(mIndex, PrayTime.HANAFI);
+        settings.setTimeFormatFor(mIndex, PrayTime.TIME_12);
+        settings.setHighLatitudeAdjustmentMethodFor(mIndex, PrayTime.NONE);
 
-        LinkedHashMap<String, String> prayerTimes = PrayTime.getPrayerTimes(getActivity(), mIndex, settings.getLatFor(0), settings.getLngFor(0));
+        LinkedHashMap<String, String> prayerTimes = PrayTime.getPrayerTimes(getActivity(), mIndex, settings.getLatFor(mIndex), settings.getLngFor(mIndex));
 
-         TextView city = view.findViewById(R.id.cityTV);
-         TextView date = view.findViewById(R.id.dateTV);
-         TextView hicriDate = view.findViewById(R.id.hicriDateTV);
+        TextView city = view.findViewById(R.id.cityTV);
+        TextView date = view.findViewById(R.id.dateTV);
+        TextView hicriDate = view.findViewById(R.id.hicriDateTV);
 
-        TextView fajr = view.findViewById(R.id.fajr);
-        TextView sunrise = view.findViewById(R.id.sunrise);
-        TextView dhuhr = view.findViewById(R.id.dhuhr);
-        TextView asr = view.findViewById(R.id.asr);
-        TextView maghrib = view.findViewById(R.id.maghrib);
-        TextView isha = view.findViewById(R.id.isha);
+        fajr = view.findViewById(R.id.fajr);
+        sunrise = view.findViewById(R.id.sunrise);
+        dhuhr = view.findViewById(R.id.dhuhr);
+        asr = view.findViewById(R.id.asr);
+        maghrib = view.findViewById(R.id.maghrib);
+        isha = view.findViewById(R.id.isha);
+        remainingPrayTimeTv = view.findViewById(R.id.remainigPrayTimeTV);
+        remainingPrayNameTv = view.findViewById(R.id.remainigPrayNameTV);
 
-         fajr.setText(prayerTimes.get("Fajr"));
-         sunrise.setText(prayerTimes.get("Sunrise"));
-         dhuhr.setText(prayerTimes.get("Dhuhr"));
-         asr.setText(prayerTimes.get("Asr"));
-         maghrib.setText(prayerTimes.get("Maghrib"));
-         isha.setText(prayerTimes.get("Isha"));
+        fajr.setText(prayerTimes.get("Fajr"));
+        sunrise.setText(prayerTimes.get("Sunrise"));
+        dhuhr.setText(prayerTimes.get("Dhuhr"));
+        asr.setText(prayerTimes.get("Asr"));
+        maghrib.setText(prayerTimes.get("Maghrib"));
+        isha.setText(prayerTimes.get("Isha"));
 
-         String gregorianDate = LocalDate.now().toString(FULL_DATE_FORMATTTER);
-//         String hijriDate = getHijriDate();
+        String gregorianDate = LocalDate.now().toString(FULL_DATE_FORMATTTER);
+        String hijriDate = getHijriDate();
 
-         date.setText(gregorianDate);
-//         hicriDate.setText(hijriDate);
-         city.setText(getCompleteAddressString(settings.getLatFor(0), settings.getLngFor(0)));
+        date.setText(gregorianDate);
+        hicriDate.setText(hijriDate);
+        city.setText(getCompleteAddressString(settings.getLatFor(0), settings.getLngFor(0)));
 
     }
 
@@ -131,12 +126,10 @@ public class PrayerTimeFragment extends Fragment implements Constants {
                 Address returnedAddress = addresses.get(0);
                 StringBuilder strReturnedAddress = new StringBuilder();
 
-                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                }
+                strReturnedAddress.append(returnedAddress.getLocality()).append(" ").append(returnedAddress.getCountryName());
 
                 strAdd = strReturnedAddress.toString();
-                Log.w("Current loction address", strReturnedAddress.toString());
+                Log.w("Current loction address", returnedAddress.toString());
 
             } else {
                 Toast.makeText(getActivity(), "No Address Found", Toast.LENGTH_SHORT).show();
