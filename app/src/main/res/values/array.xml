@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="weekdays">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </array>
+
+    <array name="MonthNames">
+        <item>Muharram</item>
+        <item>Safar</item>
+        <item>Rabi-al Awwal</item>
+        <item>Rabi-al Thani</item>
+        <item>Jumada al-Ula</item>
+        <item>Jumada al-Thani</item>
+        <item>Rajab</item>
+        <item>Shaaban</item>
+        <item>Ramadhan</item>
+        <item>Shawwal</item>
+        <item>Dhul Qaadah</item>
+        <item>Dhul Hijjah</item>
+    </array>
+
+    <array name="month_gregorian_names">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+
+    <array name="hijri_holidays_names">
+        <item>1 / Muharram: Islamic New Year</item>
+        <item>10 / Muharram: Ashura</item>
+        <item>12 / Rabi-al Awwal: the birth anniversary of Prophet Mohammad</item>
+        <item>27 / Rajab: The Isra and Miraj</item>
+        <item>27 / Ramadan: The Night of Power(Laylat al-Qadr)</item>
+        <item>1 / Shawwal: Eid Al-Fitr</item>
+        <item>9 / Dhul Hijjah: Arafa day</item>
+        <item>10 / Dhul Hijjah: Eid al-Adha</item>
+    </array>
+
+</resources>
