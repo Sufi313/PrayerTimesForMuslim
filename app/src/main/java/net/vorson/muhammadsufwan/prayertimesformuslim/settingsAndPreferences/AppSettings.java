@@ -61,6 +61,8 @@ public class AppSettings {
     public static final String APP_VERSION_CODE = "current_version_code";
     public static final String IS_TNC_ACCEPTED = "is_tnc_accepted";
 
+//    DISPLAY RELATED
+     public static final String sHijriAdjust = "Hijri_Adjust";
   }
 
 
@@ -280,6 +282,15 @@ public class AppSettings {
   }
 
   /*********************************************************/
+
+//  SET AND GET DISPLAY SETTINGS VALUES
+
+  public void setAdjustHijriDiff(int index, String dayDiff){
+    set(getKeyFor(Key.sHijriAdjust,index),dayDiff);
+  }
+  public String getAdjustHijriDiff(int index){
+    return getString(getKeyFor(Key.sHijriAdjust, index),"0");
+  }
 
 //  SET AND GET LOCATION VALUES
 

@@ -336,4 +336,8 @@
     <string name="hijriMonth11">Dhu al-Qa\'dah</string>
     <string name="hijriMonth12">Dhu al-Hijjah</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hijri_calendar">Hijri Calendar</string>
+
 </resources>

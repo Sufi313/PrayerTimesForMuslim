@@ -32,7 +32,8 @@
         android:roundIcon="@drawable/ic_new_make"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
-        <activity android:name=".compass.QiblaActivity"></activity>
+        <activity android:name=".IslamicCalendarActivity"></activity>
+        <activity android:name=".compass.QiblaActivity" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="user">

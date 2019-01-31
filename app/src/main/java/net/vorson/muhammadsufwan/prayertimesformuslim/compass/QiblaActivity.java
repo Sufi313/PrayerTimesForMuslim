@@ -16,10 +16,10 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.HomeActivity;
+import net.vorson.muhammadsufwan.prayertimesformuslim.IslamicCalendarActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.classes.OrientationCalculator;
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.classes.OrientationCalculatorImpl;
@@ -75,6 +75,9 @@ public class QiblaActivity extends AppCompatActivity implements LocationListener
 
                         break;
                     case R.id.action_quran_view:
+                        break;
+                    case R.id.action_islamic_calendar:
+                        startActivity(new Intent(QiblaActivity.this, IslamicCalendarActivity.class));
                         break;
                 }
                 return false;

@@ -15,6 +15,7 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.GpsTracker;
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.Hijri;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PrayTime;
 
 import org.joda.time.LocalDate;
@@ -112,7 +113,7 @@ public class PrayerTimeFragment extends Fragment implements Constants {
         String hijriDate = getHijriDate();
 
         date.setText(gregorianDate);
-        hicriDate.setText(hijriDate);
+        hicriDate.setText(Hijri.HijriDisplay(getActivity()));
         city.setText(getCompleteAddressString(settings.getLatFor(0), settings.getLngFor(0)));
 
     }

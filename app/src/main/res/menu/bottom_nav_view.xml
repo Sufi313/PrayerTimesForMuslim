@@ -12,4 +12,9 @@
         android:id="@+id/action_quran_view"
         android:icon="@drawable/ic_quran_rehal"
         android:title="@string/quran"/>
+
+    <item
+        android:id="@+id/action_islamic_calendar"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/hijri_calendar"/>
 </menu>
