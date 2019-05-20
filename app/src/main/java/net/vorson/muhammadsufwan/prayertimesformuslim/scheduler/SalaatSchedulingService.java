@@ -65,7 +65,7 @@ public class SalaatSchedulingService extends IntentService implements Constants 
         new Intent(this, ShowPrayAlarmActivity.class), 0);
 
     builder = new NotificationCompat.Builder(this,NOTIFICATION_CHANEL_ID)
-            .setSmallIcon(R.drawable.ic_new_make)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
             .setContentText(msg)

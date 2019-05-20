@@ -115,7 +115,6 @@ public class HijriCalendarFragment extends Fragment {
         if (todayDayOfWeek == 1) {
             todayDayOfWeek = 8;
         }
-        System.out.println("ghaskjfkhsdgfkjgsadfjg "+cal.getActualMaximum(Calendar.DAY_OF_MONTH));
         cal.add(Calendar.DAY_OF_MONTH, 2 - todayDayOfWeek);
         for (int week = 0; week < 6; week++) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -140,7 +139,7 @@ public class HijriCalendarFragment extends Fragment {
     private void addWeekDaysEn(LayoutInflater layoutInflater, View weekView) {
         for (int day = 0; day < 7; day++) {
             int[] hijint = Hijri.chrToIsl(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), adjst);
-            boolean inThisMonth = hijint[1] == this.HijriMonth;
+            boolean inThisMonth = hijint[1] == HijriMonth;
             int cellLayoutResId = R.layout.hijri_cell;
             if (inThisMonth) {
                 cellLayoutResId = R.layout.hijri_cell_in;
@@ -155,11 +154,13 @@ public class HijriCalendarFragment extends Fragment {
             }
             View dayView = layoutInflater.inflate(cellLayoutResId, (ViewGroup) weekView, false);
             TextView dayGcell = dayView.findViewById(R.id.hijri_cell_g);
-            ((TextView) dayView.findViewById(R.id.hijri_cell_h)).setText(hijint[0] + "");
+            TextView dayHcell = dayView.findViewById(R.id.hijri_cell_h);
+            dayHcell.setText(hijint[0] + "");
             dayGcell.setText(cal.get(Calendar.DATE) + "");
-            LinearLayout cellLay = (LinearLayout) dayView.findViewById(R.id.hijri_cell_in_layout);
+            LinearLayout cellLay = dayView.findViewById(R.id.hijri_cell_in_layout);
             if (isToday) {
-                cellLay.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+                cellLay.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+
             }
             String holidayname = checkIfHolyDay(hijint[1], hijint[0]);
             if (!holidayname.equalsIgnoreCase("") && inThisMonth) {

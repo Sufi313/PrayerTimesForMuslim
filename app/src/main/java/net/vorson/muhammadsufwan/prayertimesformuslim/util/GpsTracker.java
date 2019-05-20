@@ -74,7 +74,7 @@ public class GpsTracker extends Service implements LocationListener {
                 Log.e(TAG,"no network provider is enabled");
 
             } else {
-                this.canGetLocation = true;
+                canGetLocation = true;
                 // First get location from Network Provider
                 if (!isNetworkEnabled) {
                     //check the network permission
@@ -172,7 +172,7 @@ public class GpsTracker extends Service implements LocationListener {
      * */
 
     public boolean canGetLocation() {
-        return this.canGetLocation;
+        return canGetLocation;
     }
 
     /**

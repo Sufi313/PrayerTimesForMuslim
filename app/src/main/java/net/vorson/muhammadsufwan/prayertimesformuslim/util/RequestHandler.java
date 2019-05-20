@@ -26,7 +26,6 @@ public class RequestHandler {
     //in the hashmap we have the data to be sent to the server in keyvalue pairs
     public String sendPostRequest(String requestURL, HashMap<String, String> postDataParams) {
         URL url;
-
         StringBuilder sb = new StringBuilder();
         try {
 

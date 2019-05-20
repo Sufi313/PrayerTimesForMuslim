@@ -27,12 +27,16 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@drawable/ic_new_make"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_new_make"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
-        <activity android:name=".IslamicCalendarActivity"></activity>
+        <activity android:name=".tasbeeh.TasbihActivity" />
+        <activity android:name=".quran.AlQuranSettingsActivity" />
+        <activity android:name=".quran.ScrollingStyleQuranActivity" />
+        <activity android:name=".quran.QuranActivity" />
+        <activity android:name=".IslamicCalendarActivity" />
         <activity android:name=".compass.QiblaActivity" />
         <activity
             android:name=".MainActivity"
@@ -41,6 +45,13 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".NotificationActivity">
+            <intent-filter>
+                <action android:name="NotificationActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -90,7 +101,7 @@
         <receiver android:name=".scheduler.SalaatAlarmReceiver" />
         <receiver
             android:name=".scheduler.SalaatBootReceiver"
-            android:enabled="false">
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
@@ -102,6 +113,19 @@
         <service android:name=".scheduler.SalaatSchedulingService" />
 
         <activity android:name=".SerachCityActivity" />
+        <activity android:name=".quran.PrefsActivity" />
+
+        <receiver
+            android:name=".quran.NotificationBroadcast"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.isysway.free.alquran.delete" />
+                <action android:name="com.isysway.free.alquran.pause" />
+                <action android:name="com.isysway.free.alquran.next" />
+                <action android:name="com.isysway.free.alquran.play" />
+                <action android:name="com.isysway.free.alquran.previous" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

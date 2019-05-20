@@ -12,8 +12,6 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
 
 public class MainActivity extends AppCompatActivity  {
 
-
-    private ImageView zoomImage;
     private int screenWidthDp = 0;
     private int screenHeightDp = 0;
 
@@ -24,13 +22,11 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         ScreenUtils.lockOrientation(this);
 
-        zoomImage = findViewById(R.id.imageZoom);
-        Glide.with(this).load(R.drawable.world_spin).into(zoomImage);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                finish();
             }
         },4000);
 

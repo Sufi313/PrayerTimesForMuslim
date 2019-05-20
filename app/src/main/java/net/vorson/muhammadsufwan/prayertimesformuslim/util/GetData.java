@@ -26,6 +26,13 @@ public class GetData extends AsyncTask<Void, Integer, String> {
         this.progressDialog = new ProgressDialog(context);
     }
 
+//    public GetData(String url, int requestCode, Context context) {
+//        this.url  = url;
+//        this.requestCode = requestCode;
+//        asyncResponse = (GetDataListener) context;
+//        this.progressDialog = new ProgressDialog(context);
+//    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();

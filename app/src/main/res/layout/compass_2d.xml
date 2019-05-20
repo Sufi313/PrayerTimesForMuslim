@@ -40,7 +40,7 @@
             android:gravity="center"
             android:text="Angle"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/primary_text"
+            android:textColor="@color/textColorSecondary"
             android:textStyle="bold" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:gravity="center"
             android:text="Distance"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/primary_text"
+            android:textColor="@color/textColorSecondary"
             android:textStyle="bold" />
 
         <TextView

@@ -1,6 +1,5 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * The configuration screen for the {@link PrayTimeWidget PrayTimeWidget} AppWidget.
  */
-public class PrayTimeWidgetConfigureActivity extends Activity {
+public class PrayTimeWidgetConfigureActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "net.vorson.muhammadsufwan.prayertimesformuslim.PrayTimeWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";

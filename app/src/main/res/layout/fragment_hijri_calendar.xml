@@ -21,7 +21,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@color/transparent"
                 android:orientation="horizontal"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -33,9 +33,11 @@
                     android:layout_height="48dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/arrow_back_button"
                     android:background="@drawable/preference_pressed"
-                    android:padding="6dp"
-                    android:src="@drawable/navigate_back" />
+                    android:padding="@dimen/space_five"
+                    app:srcCompat="@drawable/navigate_back" />
 
                 <TextView
                     android:id="@+id/hijri_h_month"
@@ -43,8 +45,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/pro_display_regular"/>
 
                 <TextView
                     android:id="@+id/hijri_g_month"
@@ -56,17 +59,20 @@
                     android:layout_marginRight="56dp"
                     android:gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/textColorSecondary"
+                    android:fontFamily="@font/pro_display_regular"/>
 
                 <ImageButton
                     android:id="@+id/hijri_next_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/preference_pressed"
-                    android:padding="6dp"
-                    android:src="@drawable/naivgate_forward" />
+                    android:contentDescription="@string/arrow_farword_button"
+                    android:padding="@dimen/space_five"
+                    app:srcCompat="@drawable/naivgate_forward" />
             </RelativeLayout>
 
             <LinearLayout

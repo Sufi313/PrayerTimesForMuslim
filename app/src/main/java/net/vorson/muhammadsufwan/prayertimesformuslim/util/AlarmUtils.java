@@ -1,7 +1,5 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim.util;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -10,11 +8,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.widget.ArrayAdapter;
 
-import net.vorson.muhammadsufwan.prayertimesformuslim.R;
-
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AlarmUtils {
 
@@ -49,7 +48,7 @@ public class AlarmUtils {
     return (int) Math.ceil((double) audioManager.getStreamMaxVolume(audioStream) * (percentage / 100.0d));
   }
 
-  public static Map<String, Uri> getRingtones(Activity activity) {
+  public static Map<String, Uri> getRingtones(AppCompatActivity activity) {
     RingtoneManager manager = new RingtoneManager(activity);
     manager.setType(RingtoneManager.TYPE_RINGTONE);
     Cursor cursor = manager.getCursor();
@@ -65,7 +64,7 @@ public class AlarmUtils {
     return list;
   }
 
-  public static void getRingtonesDialog(Activity activity, Collection<String> items, int selected, DialogInterface.OnClickListener itemClickListener, DialogInterface.OnClickListener okClickListener, final DialogInterface.OnClickListener cancelClickListener) {
+  public static void getRingtonesDialog(AppCompatActivity activity, Collection<String> items, int selected, DialogInterface.OnClickListener itemClickListener, DialogInterface.OnClickListener okClickListener, final DialogInterface.OnClickListener cancelClickListener) {
     AlertDialog.Builder builderSingle = new AlertDialog.Builder(activity);
     builderSingle.setTitle("Select Ringtone");
 

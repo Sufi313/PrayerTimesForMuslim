@@ -1,8 +1,6 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim.util;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +12,8 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.App;
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import io.reactivex.annotations.NonNull;
@@ -62,7 +62,7 @@ public class PermissionUtils {
             pNotPolicy = true;
     }
 
-    public void needNotificationPolicy(@NonNull final Activity act) {
+    public void needNotificationPolicy(@NonNull final AppCompatActivity act) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && act.isDestroyed())
             return;
 
@@ -85,7 +85,7 @@ public class PermissionUtils {
         }
     }
 
-    public void needCamera(@NonNull final Activity act) {
+    public void needCamera(@NonNull final AppCompatActivity act) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && act.isDestroyed())
             return;
 
@@ -107,7 +107,7 @@ public class PermissionUtils {
     }
 
 
-    public void needLocation(@NonNull final Activity act) {
+    public void needLocation(@NonNull final AppCompatActivity act) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && act.isDestroyed())
             return;
 
@@ -130,7 +130,7 @@ public class PermissionUtils {
     }
 
 
-    public void needCalendar(@NonNull final Activity act, boolean force) {
+    public void needCalendar(@NonNull final AppCompatActivity act, boolean force) {
         appSettings = AppSettings.getInstance(App.get());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && act.isDestroyed())
             return;
@@ -153,7 +153,7 @@ public class PermissionUtils {
     }
 
 
-    public void needStorage(@NonNull final Activity act) {
+    public void needStorage(@NonNull final AppCompatActivity act) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && act.isDestroyed())
             return;
 

@@ -158,7 +158,7 @@ public class MonthlyPrayersTimeFragment extends Fragment {
             prayers.setCalcMethod(PrayTime.KARACHI);
             prayers.setAsrJuristic(PrayTime.HANAFI);
             prayers.setAdjustHighLats(PrayTime.ANGLE_BASED);
-            prayers.setTimeFormat(PrayTime.TIME_24);
+            prayers.setTimeFormat(PrayTime.TIME_12_NS);
 
             int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
             prayers.tune(offsets);
@@ -207,10 +207,6 @@ public class MonthlyPrayersTimeFragment extends Fragment {
                 viewHolder.up.setText(up);
                 viewHolder.down.setText(down);
                 if (dayg == today && month == currentMonth && cal.get(Calendar.YEAR) == currentYear) {
-                    viewHolder.holder.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
-                } else if (position % 2 == 0) {
-                    viewHolder.holder.setBackgroundColor(mContext.getResources().getColor(R.color.blue_grey));
-                } else {
                     viewHolder.holder.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
                     viewHolder.text1.setTextColor(mContext.getResources().getColor(R.color.white));
                     viewHolder.text2.setTextColor(mContext.getResources().getColor(R.color.white));
@@ -220,6 +216,12 @@ public class MonthlyPrayersTimeFragment extends Fragment {
                     viewHolder.up.setTextColor(mContext.getResources().getColor(R.color.white));
                     viewHolder.down.setTextColor(mContext.getResources().getColor(R.color.white));
                 }
+//                else if (position % 2 == 0) {
+//                    viewHolder.holder.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+//                } else {
+//                    viewHolder.holder.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+//
+//                }
                 return row;
             }
         };

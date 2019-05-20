@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="1dp"
     android:layout_weight="1"
-    android:orientation="vertical"
-    android:padding="4dp">
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="@dimen/space_ten"
+    >
 
-    <TextView
-        android:id="@+id/hijri_cell_h"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/secondary_text" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="4dp">
 
-    <TextView
-        android:id="@+id/hijri_cell_g"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="4dp"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/secondary_text" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/hijri_cell_h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/pro_display_regular"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/textColorSecondary" />
+
+        <TextView
+            android:id="@+id/hijri_cell_g"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:singleLine="true"
+            android:fontFamily="@font/pro_display_regular"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/textColorSecondary" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

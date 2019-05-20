@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,7 +27,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/app_name"
                 android:tint="@color/white"
-                android:src="@drawable/ic_new_make" />
+                app:srcCompat="@drawable/ic_muslim" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -124,6 +125,46 @@
                         android:id="@+id/citySelectedTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/quranViewSettingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:weightSum="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="0.75"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/space_twenty">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_reading"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="0.25"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Al-Quran (Settings)"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/defual_text_size"/>
 
                 </LinearLayout>
 

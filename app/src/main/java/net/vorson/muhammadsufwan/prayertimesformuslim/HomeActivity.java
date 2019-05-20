@@ -1,35 +1,46 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.QiblaActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.ViewPagerAdapter;
-import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.HijriCalendarFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.MonthlyPrayersTimeFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.PrayerTimeFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.WeeklyPrayersTimeFragment;
+import net.vorson.muhammadsufwan.prayertimesformuslim.quran.QuranActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.SettingsActivity;
+import net.vorson.muhammadsufwan.prayertimesformuslim.util.GetData;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.GpsTracker;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PermissionUtils;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.ScreenUtils;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements GetData.GetDataListener {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
@@ -60,12 +71,21 @@ public class HomeActivity extends AppCompatActivity {
             settings.set(AppSettings.Key.USE_ADHAN, true);
             settings.set(AppSettings.Key.IS_INIT, true);
         }
-
-        gpsTracker = new GpsTracker(this);
-        if (gpsTracker.canGetLocation()) {
-            if (gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0) {
-                settings.setLatFor(0, gpsTracker.getLatitude());
-                settings.setLngFor(0, gpsTracker.getLongitude());
+        if (settings.getString(AppSettings.Key.LAT_FOR) == null){
+            if (!PermissionUtils.get(this).pLocation) {
+                gpsTracker = new GpsTracker(this);
+                if (gpsTracker.canGetLocation()) {
+                    if (gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0) {
+                        settings.setLatFor(0, gpsTracker.getLatitude());
+                        settings.setLngFor(0, gpsTracker.getLongitude());
+                    }
+                }else{
+                    Toast.makeText(this, "An error accourd Device not found location please select menual", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else if (App.isOnline()){
+                HashMap<String,String> params = new HashMap<>();
+                new GetData("http://ip-api.com/json",params,10,this).execute();
             }
         }
 
@@ -88,8 +108,8 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(new Intent(HomeActivity.this, QiblaActivity.class));
                         break;
                     case R.id.action_quran_view:
+                        startActivity(new Intent(HomeActivity.this, QuranActivity.class));
                         break;
-
                     case R.id.action_islamic_calendar:
                         startActivity(new Intent(HomeActivity.this, IslamicCalendarActivity.class));
                         break;
@@ -157,5 +177,54 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static String getUserCountry(Context context) {
+        StringBuilder ret = new StringBuilder();
+        try {
+            final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            final String simCountry = tm.getSimCountryIso();
+            if (simCountry != null && simCountry.length() == 2) { // SIM country code is available
+                ret.append(simCountry.toLowerCase(Locale.US));
+                ret.append("\n");
+                ret.append(tm.getNetworkOperatorName());
+                ret.append("\n");
+                ret.append(tm.getNetworkType());
+                ret.append("\n");
+                ret.append(tm.getPhoneType());
+                return ret.toString();
+            }
+            else if (tm.getPhoneType() != TelephonyManager.PHONE_TYPE_CDMA) { // device is not 3G (would be unreliable)
+                String networkCountry = tm.getNetworkCountryIso();
+                if (networkCountry != null && networkCountry.length() == 2) { // network country code is available
+                    ret.append(simCountry.toLowerCase(Locale.US));
+                    ret.append("\n");
+                    ret.append(tm.getNetworkOperatorName());
+                    ret.append("\n");
+                    ret.append(tm.getNetworkType());
+                    ret.append("\n");
+                    ret.append(tm.getPhoneType());
+                    return ret.toString();
+
+                }
+            }
+        }
+        catch (Exception e) {
+            ret.append(e.getMessage());
+        }
+        return ret.toString();
+    }
+
+    @Override
+    public void getDownloadData(String result, int request) {
+        if (request == 10){
+            Log.d(TAG, "getDownloadData: "+result);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionUtils.get(this).onRequestPermissionResult(permissions, grantResults);
     }
 }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_home_view"
-        android:icon="@drawable/ic_clock_two"
+        android:icon="@drawable/ic_clock"
         android:title="@string/prayer_time"/>
     <item
         android:id="@+id/action_qibla_view"

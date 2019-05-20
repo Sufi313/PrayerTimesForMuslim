@@ -3,6 +3,7 @@ package net.vorson.muhammadsufwan.prayertimesformuslim;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.app.KeyguardManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -77,11 +79,20 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
-                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+            keyguardManager.requestDismissKeyguard(this, null);
+        }
+        else
+            {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                    WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
 
         ScreenUtils.lockOrientation(this);
 
@@ -124,8 +135,6 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
         //}
 
     }
-
-
 
     @Override
     public void onCompletion(MediaPlayer mp) {
@@ -331,7 +340,7 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_new_make)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(body))
@@ -349,7 +358,7 @@ public class ShowPrayAlarmActivity extends AppCompatActivity implements Constant
 
 
     private static class AscendingAlarmHandler extends Handler {
-        WeakReference<AudioManager> mAudioManagerRef = null;
+        WeakReference<AudioManager> mAudioManagerRef;
 
 
         public AscendingAlarmHandler(AudioManager audioManager) {

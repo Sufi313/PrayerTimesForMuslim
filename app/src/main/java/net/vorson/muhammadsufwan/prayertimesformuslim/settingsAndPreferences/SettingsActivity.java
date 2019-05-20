@@ -14,9 +14,12 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.server.converter.StringToIntConverter;
+
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.SerachCityActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
+import net.vorson.muhammadsufwan.prayertimesformuslim.quran.AlQuranSettingsActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.AlarmUtils;
 
 import java.io.IOException;
@@ -28,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity implements Constants, Co
     int mIndex = 0;
     AppSettings settings;
     private TextView setRingtoneTextView;
-    private LinearLayout mRingtone ,city;
+    private LinearLayout mRingtone ,city,quranOptions;
 
     Map<String, Uri> mRingtonesMap;
     private Uri mLastSelectedRingtone = null;
@@ -44,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity implements Constants, Co
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
+        quranOptions = findViewById(R.id.quranViewSettingLayout);
         setRingtoneTextView = findViewById(R.id.ringtoneSelectedTV);
         mRingtone = findViewById(R.id.ringtoneSelectedLayout);
         city = findViewById(R.id.citySelectedLayout);
@@ -51,6 +55,12 @@ public class SettingsActivity extends AppCompatActivity implements Constants, Co
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SettingsActivity.this,SerachCityActivity.class));
+            }
+        });
+        quranOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, AlQuranSettingsActivity.class));
             }
         });
 

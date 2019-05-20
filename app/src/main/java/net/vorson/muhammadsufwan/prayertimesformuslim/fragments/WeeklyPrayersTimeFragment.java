@@ -101,8 +101,17 @@ public class WeeklyPrayersTimeFragment extends Fragment {
         for (int i = 0; i < 7; i++) {
             cal.add(Calendar.DAY_OF_YEAR, 1);
             View row = LayoutInflater.from(mContext).inflate(R.layout.table_weekly, null);
+            LinearLayout rowHolder = row.findViewById(R.id.table_row_holder);
+            TextView dateUp = row.findViewById(R.id.tup);
+            TextView dateDown = row.findViewById(R.id.tdown);
+            TextView timeF = row.findViewById(R.id.t1);
+            TextView timeD = row.findViewById(R.id.t2);
+            TextView timeA = row.findViewById(R.id.t3);
+            TextView timeM = row.findViewById(R.id.t4);
+            TextView timeI = row.findViewById(R.id.t5);
+
             int dayg = cal.get(Calendar.DATE);
-            int month = cal.get(Calendar.YEAR) + 1;
+            int month = cal.get(Calendar.MONTH) + 1;
 
             //Get offset from UTC, accounting for DST
             int defaultTzOffsetMs = cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET);
@@ -115,25 +124,32 @@ public class WeeklyPrayersTimeFragment extends Fragment {
             prayers.setCalcMethod(PrayTime.KARACHI);
             prayers.setAsrJuristic(PrayTime.HANAFI);
             prayers.setAdjustHighLats(PrayTime.ANGLE_BASED);
-            prayers.setTimeFormat(PrayTime.TIME_24);
+            prayers.setTimeFormat(PrayTime.TIME_12_NS);
 
             int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
             prayers.tune(offsets);
 
             ArrayList<String> PTimes = prayers.getPrayerTimes(cal, settings.getLatFor(0), settings.getLngFor(0), timezone);
 
-            ((TextView) row.findViewById(R.id.tdown)).setText(dayg + DialogConfigs.DIRECTORY_SEPERATOR + month);
-            ((TextView) row.findViewById(R.id.t1)).setText(PTimes.get(0));
-            ((TextView) row.findViewById(R.id.t2)).setText(PTimes.get(2));
-            ((TextView) row.findViewById(R.id.t3)).setText(PTimes.get(3));
-            ((TextView) row.findViewById(R.id.t4)).setText(PTimes.get(5));
-            ((TextView) row.findViewById(R.id.t5)).setText(PTimes.get(6));
-            ((TextView) row.findViewById(R.id.tup)).setText(HijriDisplay(cal));
+            dateDown.setText(dayg + DialogConfigs.DIRECTORY_SEPERATOR + month);
+            timeF.setText(PTimes.get(0));
+            timeD.setText(PTimes.get(2));
+            timeA.setText(PTimes.get(3));
+            timeM.setText(PTimes.get(5));
+            timeI.setText(PTimes.get(6));
+            dateUp.setText(HijriDisplay(cal));
             if (i % 2 == 0) {
-                row.setBackgroundColor(getResources().getColor(R.color.blue_grey));
+                row.setBackgroundColor(getResources().getColor(R.color.white));
             }
-            if (dayg == this.today && month == this.currentMonth) {
-                row.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            if (dayg == today && month == currentMonth) {
+                rowHolder.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+                dateDown.setTextColor(getResources().getColor(R.color.white));
+                dateUp.setTextColor(getResources().getColor(R.color.white));
+                timeF.setTextColor(getResources().getColor(R.color.white));
+                timeD.setTextColor(getResources().getColor(R.color.white));
+                timeA.setTextColor(getResources().getColor(R.color.white));
+                timeM.setTextColor(getResources().getColor(R.color.white));
+                timeI.setTextColor(getResources().getColor(R.color.white));
             }
             table.addView(row, new LinearLayout.LayoutParams(-1, -2, 1.0f));
         }

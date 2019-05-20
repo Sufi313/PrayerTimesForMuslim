@@ -3,6 +3,7 @@ package net.vorson.muhammadsufwan.prayertimesformuslim.fragments;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.vorson.muhammadsufwan.prayertimesformuslim.HomeActivity;
+import net.vorson.muhammadsufwan.prayertimesformuslim.MainActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
 import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
@@ -39,16 +42,6 @@ public class PrayerTimeFragment extends Fragment implements Constants {
     private static final DateTimeFormatter FULL_DATE_FORMATTTER = DateTimeFormat.forPattern(FULL_DATE_PATTERN);
     private Timer timer;
     private TimerTask timerTask;
-    private TextView fajr;
-    private TextView sunrise;
-    private TextView dhuhr;
-    private TextView asr;
-    private TextView maghrib;
-    private TextView isha;
-    private TextView remainingPrayTimeTv;
-    private TextView remainingPrayNameTv;
-
-    private int mIndex = 0;
 
     public PrayerTimeFragment() {
         // Required empty public constructor
@@ -82,6 +75,7 @@ public class PrayerTimeFragment extends Fragment implements Constants {
 
         AppSettings settings = AppSettings.getInstance(getActivity());
 
+        int mIndex = 0;
         settings.setCalcMethodFor(mIndex, PrayTime.KARACHI);
         settings.setAsrMethodFor(mIndex, PrayTime.HANAFI);
         settings.setTimeFormatFor(mIndex, PrayTime.TIME_12);
@@ -89,18 +83,21 @@ public class PrayerTimeFragment extends Fragment implements Constants {
 
         LinkedHashMap<String, String> prayerTimes = PrayTime.getPrayerTimes(getActivity(), mIndex, settings.getLatFor(mIndex), settings.getLngFor(mIndex));
 
+        TextView fajr = view.findViewById(R.id.fajr);
+        TextView sunrise = view.findViewById(R.id.sunrise);
+        TextView dhuhr = view.findViewById(R.id.dhuhr);
+        TextView asr = view.findViewById(R.id.asr);
+        TextView maghrib = view.findViewById(R.id.maghrib);
+        TextView isha = view.findViewById(R.id.isha);
+
         TextView city = view.findViewById(R.id.cityTV);
         TextView date = view.findViewById(R.id.dateTV);
         TextView hicriDate = view.findViewById(R.id.hicriDateTV);
+        TextView remainingPrayNameTv = view.findViewById(R.id.remainigPrayNameTV);
+        TextView remainingPrayTimeTv = view.findViewById(R.id.remainigPrayTimeTV);
 
-        fajr = view.findViewById(R.id.fajr);
-        sunrise = view.findViewById(R.id.sunrise);
-        dhuhr = view.findViewById(R.id.dhuhr);
-        asr = view.findViewById(R.id.asr);
-        maghrib = view.findViewById(R.id.maghrib);
-        isha = view.findViewById(R.id.isha);
-        remainingPrayTimeTv = view.findViewById(R.id.remainigPrayTimeTV);
-        remainingPrayNameTv = view.findViewById(R.id.remainigPrayNameTV);
+//        remainingPrayNameTv.setShadowLayer(2.5f, 0, 2, R.color.divider);
+//        remainingPrayTimeTv.setShadowLayer(2.5f, 0, 2, R.color.divider);
 
         fajr.setText(prayerTimes.get("Fajr"));
         sunrise.setText(prayerTimes.get("Sunrise"));
@@ -110,7 +107,6 @@ public class PrayerTimeFragment extends Fragment implements Constants {
         isha.setText(prayerTimes.get("Isha"));
 
         String gregorianDate = LocalDate.now().toString(FULL_DATE_FORMATTTER);
-        String hijriDate = getHijriDate();
 
         date.setText(gregorianDate);
         hicriDate.setText(Hijri.HijriDisplay(getActivity()));
@@ -142,13 +138,6 @@ public class PrayerTimeFragment extends Fragment implements Constants {
         return strAdd;
     }
 
-    private String getHijriDate() {
-        LocalDateTime hijriNow = LocalDateTime.now(IslamicChronology.getInstance());
-        String originalHijriDate = hijriNow.toString(FULL_DATE_PATTERN, Locale.getDefault());
 
-        String hijriMonthName = getString(getResources().getIdentifier("hijriMonth" + hijriNow.getMonthOfYear(), "string", getContext().getApplicationInfo().packageName));
-
-        return originalHijriDate.replaceAll("^(.+) (.+) (.+)$", "$1 " + hijriMonthName + " $3");
-    }
 
 }

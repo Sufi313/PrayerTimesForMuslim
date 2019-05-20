@@ -3,9 +3,11 @@ package net.vorson.muhammadsufwan.prayertimesformuslim;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -27,9 +29,14 @@ import net.vorson.muhammadsufwan.prayertimesformuslim.models.PlaceArrayAdapter;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.PrayTime;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.TimezoneMapper;
 
+import org.joda.time.LocalDate;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -37,12 +44,14 @@ public class SerachCityActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks{
 
+    private String foundCityTimeZone ="";
     private static final String LOG_TAG = SerachCityActivity.class.getSimpleName();
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private AutoCompleteTextView mAutocompleteTextView;
     private TextView mNameTextView;
     private TextView mAddressTextView;
     private TextView mAttTextView;
+    private TextView mTimeZoneChangeTV;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
@@ -65,6 +74,14 @@ public class SerachCityActivity extends AppCompatActivity implements
         mNameTextView = findViewById(R.id.name);
         mAddressTextView = findViewById(R.id.address);
         mAttTextView = findViewById(R.id.att);
+        mTimeZoneChangeTV = findViewById(R.id.mTimeZoneChangeTV);
+
+        mTimeZoneChangeTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AdjustTimeZone();
+            }
+        });
 
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(this, android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, filter);
@@ -72,8 +89,15 @@ public class SerachCityActivity extends AppCompatActivity implements
 
     }
 
+    private void AdjustTimeZone() {
+
+
+
+    }
+
     private AdapterView.OnItemClickListener mAutocompleteClickListener
             = new AdapterView.OnItemClickListener() {
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
@@ -82,6 +106,31 @@ public class SerachCityActivity extends AppCompatActivity implements
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
             placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
             Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
+            mTimeZoneChangeTV.setVisibility(View.VISIBLE);
+            mAutocompleteTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_sharp_close, 0);
+            mAutocompleteTextView.setPadding(15,0,10,0);
+
+            mAutocompleteTextView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    final int DRAWABLE_LEFT = 0;
+                    final int DRAWABLE_TOP = 1;
+                    final int DRAWABLE_RIGHT = 2;
+                    final int DRAWABLE_BOTTOM = 3;
+
+                    if(event.getAction() == MotionEvent.ACTION_UP) {
+                        if(event.getRawX() >= (mAddressTextView.getRight() - mAutocompleteTextView.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                            mAutocompleteTextView.setText("");
+                            mAutocompleteTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0);
+                            mAutocompleteTextView.setPadding(10,0,0,0);
+                            mAutocompleteTextView.setOnTouchListener(null);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+
         }
     };
 
@@ -98,9 +147,30 @@ public class SerachCityActivity extends AppCompatActivity implements
             final Place place = places.get(0);
             CharSequence attributions = places.getAttributions();
             final LatLng location = place.getLatLng();
-            setTimePrayer(location.latitude, location.longitude, place.getName());
-            mNameTextView.setText(Html.fromHtml(place.getName() + ""));
-            mAddressTextView.setText(location.latitude + "\n" + location.longitude);
+            mNameTextView.setText(LocalDate.now().toString("EEE dd MMMM YYYY"));
+            mAddressTextView.setText(foundCityTimeZone);
+//            mAddressTextView.setText(location.latitude + "\n" + location.longitude);
+            mAttTextView.setText(place.getAddress());
+            foundCityTimeZone = TimezoneMapper.latLngToTimezoneString(location.latitude,location.longitude);
+            if (foundCityTimeZone == null && foundCityTimeZone == "" && foundCityTimeZone == "unknown")
+            {
+                Toast.makeText(SerachCityActivity.this, "An Error Found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else
+            {
+                TimeZone defaultTz = TimeZone.getTimeZone(foundCityTimeZone);
+                Calendar defaultCalc = Calendar.getInstance(defaultTz);
+
+                //Get offset from UTC, accounting for DST
+                float defaultTzOffsetMs = defaultCalc.get(Calendar.ZONE_OFFSET) + defaultCalc.get(Calendar.DST_OFFSET);
+                double timezone = defaultTzOffsetMs / (1000 * 60 * 60);
+
+                String gmt = getString(R.string.gmt,String.valueOf(timezone));
+                mAddressTextView.setText(gmt);
+
+                setTimePrayer(location.latitude, location.longitude, timezone);
+            }
             if (attributions != null) {
                 mAttTextView.setText(Html.fromHtml(attributions.toString()));
             }
@@ -131,24 +201,12 @@ public class SerachCityActivity extends AppCompatActivity implements
         Log.e(LOG_TAG, "Google Places API connection suspended.");
     }
 
-    public void setTimePrayer(double lat, double lng, CharSequence placeName) {
+    public void setTimePrayer(double lat, double lng, double cityTimeZone) {
 
-        Long tsLong = System.currentTimeMillis() / 1000;
-        String ts = tsLong.toString();
-        Log.wtf("TimeStamp------>", ts);
+//        Long tsLong = System.currentTimeMillis() / 1000;
+//        String ts = tsLong.toString();
+//        Log.wtf("TimeStamp------>", ts);
 
-        String timeZone = TimezoneMapper.latLngToTimezoneString(lat,lng);
-        if (timeZone == null && timeZone == "" && timeZone == "unknown"){
-            Toast.makeText(this, "An Error Found", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        TimeZone defaultTz = TimeZone.getTimeZone(timeZone);
-        //Get NY calendar object with current date/time
-        Calendar defaultCalc = Calendar.getInstance(defaultTz);
-
-        //Get offset from UTC, accounting for DST
-        int defaultTzOffsetMs = defaultCalc.get(Calendar.ZONE_OFFSET) + defaultCalc.get(Calendar.DST_OFFSET);
-        double timezone = defaultTzOffsetMs / (1000 * 60 * 60);
 
         // Test Prayer times here
         PrayTime prayers = new PrayTime();
@@ -173,7 +231,7 @@ public class SerachCityActivity extends AppCompatActivity implements
         TextView isha = findViewById(R.id.searchCityIsha);
 
         ArrayList<String> prayerTimes = prayers.getPrayerTimes(cal,
-                lat, lng, timezone);
+                lat, lng, cityTimeZone);
 
         fajr.setText(prayerTimes.get(0));
         dhuhr.setText(prayerTimes.get(2));

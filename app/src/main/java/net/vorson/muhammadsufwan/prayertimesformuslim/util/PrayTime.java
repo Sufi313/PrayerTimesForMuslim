@@ -121,7 +121,7 @@ public class PrayTime {
 
     // --------------------- Technical Settings --------------------
 
-    this.setNumIterations(1); // number of iterations needed to compute
+    this.setNumIterations(30); // number of iterations needed to compute
     // times
 
     // ------------------- Calc Method Parameters --------------------
@@ -675,11 +675,11 @@ public class PrayTime {
    */
   public static void main(String[] args) {
 
-//    double latitude = 25.008781;
-//    double longitude = 67.0618058;
+    double latitude = 25.008781;
+    double longitude = 67.0618058;
 
-    double latitude = -33.8473567;
-    double longitude = 150.6517896;
+//    double latitude = -33.8473567;
+//    double longitude = 150.6517896;
 
     //Get NY time zone instance
 

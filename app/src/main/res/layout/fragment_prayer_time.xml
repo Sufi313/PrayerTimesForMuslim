@@ -19,42 +19,73 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/space_ten"
-            app:cardBackgroundColor="#64001931"
-            app:cardCornerRadius="@dimen/space">
+            app:cardBackgroundColor="#FFF"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_eighty"
-                android:padding="@dimen/text_ten">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/next_prayer"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_twenty" />
+                    android:textColor="@color/textColorSecondary"
+                    android:paddingLeft="@dimen/space_ten"
+                    android:paddingRight="0dp"
+                    android:paddingStart="@dimen/space_ten"
+                    android:paddingEnd="0dp"
+                    android:paddingTop="@dimen/space_ten"
+                    android:paddingBottom="@dimen/space_five"
+                    android:textSize="@dimen/text_twentyfive"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/pro_display_semibold"/>
 
-                <TextView
-                    android:id="@+id/remainigPrayNameTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="Maghrib"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_twentyfive" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/textColorSecondary"/>
 
-                <TextView
-                    android:id="@+id/remainigPrayTimeTV"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end"
-                    android:text="01:54:43"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_twentyfive"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:paddingStart="@dimen/space_ten"
+                    android:paddingLeft="@dimen/space_ten"
+                    android:paddingRight="@dimen/space_ten"
+                    android:paddingEnd="@dimen/space_ten"
+                    android:layout_marginBottom="@dimen/space_ten"
+                    >
 
-            </FrameLayout>
+                    <TextView
+                        android:layout_weight=".5"
+                        android:id="@+id/remainigPrayNameTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="Maghrib"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_twentyfive"
+                        android:fontFamily="@font/pro_display_regular"/>
+
+                    <TextView
+                        android:layout_weight=".5"
+                        android:id="@+id/remainigPrayTimeTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="end"
+                        android:text="01:54:43"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_twentyfive"
+                        android:fontFamily="@font/pro_display_regular"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -67,8 +98,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/space_ten"
-            app:cardBackgroundColor="#64001931"
-            app:cardCornerRadius="@dimen/space">
+            app:cardBackgroundColor="#ffffff"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,18 +110,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prayer Times"
-                    android:textColor="@color/white"
+                    android:text="@string/prayer_times"
+                    android:textColor="@color/textColorSecondary"
                     android:paddingLeft="@dimen/space_ten"
                     android:paddingRight="0dp"
+                    android:paddingStart="@dimen/space_ten"
+                    android:paddingEnd="0dp"
                     android:paddingTop="@dimen/space_ten"
                     android:paddingBottom="@dimen/space_five"
-                    android:textSize="@dimen/text_twentyfive"/>
+                    android:textSize="@dimen/text_twentyfive"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/pro_display_semibold"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/white"/>
+                    android:background="@color/textColorSecondary"/>
 
                 <LinearLayout
                     android:id="@+id/fajr_time_layout"
@@ -105,8 +141,9 @@
                         android:layout_weight="0.33"
                         android:gravity="center"
                         android:text="@string/fajr"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <TextView
                         android:id="@+id/fajr"
@@ -114,21 +151,22 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.33"
                         android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"/>
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="0.33"
-                        android:src="@drawable/ic_alarm_on" />
+                        app:srcCompat="@drawable/ic_alarm_on" />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/white"/>
+                    android:background="@color/divider"/>
 
                 <LinearLayout
                     android:id="@+id/sunrise_time_layout"
@@ -144,8 +182,9 @@
                         android:gravity="center"
                         android:text="@string/sunrise"
                         android:layout_weight="0.33"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <TextView
                         android:id="@+id/sunrise"
@@ -153,14 +192,15 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_weight="0.33"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="0.33"
-                        android:src="@drawable/ic_alarm_on"
+                        app:srcCompat="@drawable/ic_alarm_on"
                         android:contentDescription="@string/button_alarm_on"/>
 
                 </LinearLayout>
@@ -168,7 +208,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/white"/>
+                    android:background="@color/divider"/>
 
                 <LinearLayout
                     android:id="@+id/dhuhr_time_layout"
@@ -184,8 +224,9 @@
                         android:gravity="center"
                         android:layout_weight="0.33"
                         android:text="@string/dhuhr"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <TextView
                         android:id="@+id/dhuhr"
@@ -193,14 +234,15 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_weight="0.33"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="0.33"
-                        android:src="@drawable/ic_alarm_on"
+                        app:srcCompat="@drawable/ic_alarm_on"
                         android:contentDescription="@string/button_alarm_on"/>
 
                 </LinearLayout>
@@ -208,7 +250,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/white"/>
+                    android:background="@color/divider"/>
 
                 <LinearLayout
                     android:id="@+id/asr_time_layout"
@@ -224,8 +266,9 @@
                         android:gravity="center"
                         android:layout_weight="0.33"
                         android:text="@string/asr"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <TextView
                         android:id="@+id/asr"
@@ -233,14 +276,15 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_weight="0.33"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="0.33"
-                        android:src="@drawable/ic_alarm_on"
+                        app:srcCompat="@drawable/ic_alarm_on"
                         android:contentDescription="@string/button_alarm_on"/>
 
                 </LinearLayout>
@@ -248,7 +292,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/white"/>
+                    android:background="@color/divider"/>
 
                 <LinearLayout
                     android:id="@+id/maghrib_time_layout"
@@ -264,8 +308,9 @@
                         android:gravity="center"
                         android:layout_weight="0.33"
                         android:text="@string/maghrib"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <TextView
                         android:id="@+id/maghrib"
@@ -273,14 +318,15 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_weight="0.33"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="0.33"
-                        android:src="@drawable/ic_alarm_on"
+                        app:srcCompat="@drawable/ic_alarm_on"
                         android:contentDescription="@string/button_alarm_on"/>
 
                 </LinearLayout>
@@ -288,7 +334,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/white"/>
+                    android:background="@color/divider"/>
 
                 <LinearLayout
                     android:id="@+id/isha_time_layout"
@@ -304,8 +350,9 @@
                         android:gravity="center"
                         android:layout_weight="0.33"
                         android:text="@string/isha"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <TextView
                         android:id="@+id/isha"
@@ -313,14 +360,15 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_weight="0.33"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/pro_display_regular"/>
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="0.33"
-                        android:src="@drawable/ic_alarm_on"
+                        app:srcCompat="@drawable/ic_alarm_on"
                         android:contentDescription="@string/button_alarm_on"/>
 
                 </LinearLayout>
@@ -343,24 +391,25 @@
                 android:id="@+id/cityTV"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:textColor="@color/color_black"
-                android:textSize="20sp" />
+                android:textColor="@color/textColorSecondary"
+                android:textSize="20sp"
+                android:fontFamily="@font/pro_display_medium"/>
 
             <TextView
                 android:id="@+id/dateTV"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:text="test"
-                android:textColor="@color/color_black"
-                android:textSize="20sp" />
+                android:textColor="@color/textColorSecondary"
+                android:textSize="20sp"
+                android:fontFamily="@font/pro_display_medium"/>
 
             <TextView
                 android:id="@+id/hicriDateTV"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:text="test"
-                android:textColor="@color/color_black"
-                android:textSize="20sp" />
+                android:textColor="@color/textColorSecondary"
+                android:textSize="20sp"
+                android:fontFamily="@font/pro_display_medium"/>
 
         </LinearLayout>
 
