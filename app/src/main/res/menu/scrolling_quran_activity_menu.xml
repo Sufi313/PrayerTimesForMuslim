@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_bookmark_menu_item"
+        android:title="@string/add_bookmark"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/play_sound_menu_item"
+        android:title="@string/play_sound"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/stop_sound_menu_item"
+        android:title="@string/stop_sound"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/pause_sound_menu_item"
+        android:title="@string/pause_sound"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/download_audio_menu_item"
+        android:title="@string/download_audio"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/next"
+        android:title="@string/next_Joza"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/prev"
+        android:title="@string/prev_Joza"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/night_reading_on"
+        android:title="@string/night_reading_on"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/night_reading_off"
+        android:title="@string/night_reading_off"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/word_meaning_on"
+        android:title="@string/word_meaning_on"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/word_meaning_off"
+        android:title="@string/word_meaning_off"
+        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/tafsir_options"-->
+        <!--android:title="@string/tafsir_options"-->
+        <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/gotoAyah"
+        android:title="@string/gotoAyah"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/gotoPage"
+        android:title="@string/gotoPage"
+        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/tahfiz_by_typing"-->
+        <!--android:title="@string/tahfiz_by_typing"-->
+        <!--app:showAsAction="never" />-->
+</menu>

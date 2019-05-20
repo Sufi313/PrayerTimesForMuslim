@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/waveform_unselected_bkgnd_overlay"
+    tools:context=".NotificationActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/toolbarImageTicketActivity"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_sharp_arrow_back"
+                android:background="@drawable/ripple_effect"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notification"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_twenty"
+                android:paddingStart="@dimen/space_ten"
+                android:paddingLeft="@dimen/space_ten"
+                />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/space_ten"
+        app:cardCornerRadius="@dimen/space_ten"
+        app:cardElevation="@dimen/space_twenty"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp">
+
+                <ImageView
+                    android:id="@+id/notiBG"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/world_spin"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Quat Of The Day"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_twentyfive"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pro_display_medium"
+                    android:paddingTop="@dimen/space_ten"/>
+
+            </FrameLayout>
+
+
+           <TextView
+               android:id="@+id/notificationTitle"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@string/notification"
+               android:padding="@dimen/space_ten"
+               android:textSize="@dimen/space_twentyfive"/>
+
+            <TextView
+                android:id="@+id/notificationContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification"
+                android:textSize="@dimen/space_twenty"
+                android:paddingLeft="@dimen/space_ten"
+                android:paddingRight="@dimen/space_ten"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
