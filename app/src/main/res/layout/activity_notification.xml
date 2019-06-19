@@ -67,7 +67,6 @@
                     android:id="@+id/notiBG"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/world_spin"
                     android:scaleType="fitXY"/>
 
                 <TextView
@@ -77,7 +76,7 @@
                     android:text="Quat Of The Day"
                     android:gravity="center"
                     android:textSize="@dimen/text_twentyfive"
-                    android:textColor="@color/white"
+                    android:textColor="@color/textColorSecondary"
                     android:fontFamily="@font/pro_display_medium"
                     android:paddingTop="@dimen/space_ten"/>
 

@@ -3,6 +3,8 @@ package net.vorson.muhammadsufwan.prayertimesformuslim;
 import android.content.Intent;
 import android.content.res.Configuration;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -39,6 +41,5 @@ public class MainActivity extends AppCompatActivity  {
 //        zoomImage.setLayoutParams(layoutParams);
 
     }
-
 
 }

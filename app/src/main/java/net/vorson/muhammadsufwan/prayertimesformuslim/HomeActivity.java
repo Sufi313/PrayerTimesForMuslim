@@ -1,15 +1,16 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,9 +18,11 @@ import com.google.android.material.tabs.TabLayout;
 
 import net.vorson.muhammadsufwan.prayertimesformuslim.compass.QiblaActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.ViewPagerAdapter;
+import net.vorson.muhammadsufwan.prayertimesformuslim.findMosque.FindMosqueActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.MonthlyPrayersTimeFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.PrayerTimeFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.fragments.WeeklyPrayersTimeFragment;
+import net.vorson.muhammadsufwan.prayertimesformuslim.names.NamesFragment;
 import net.vorson.muhammadsufwan.prayertimesformuslim.quran.QuranActivity;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
 import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.SettingsActivity;
@@ -36,6 +39,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 public class HomeActivity extends AppCompatActivity implements GetData.GetDataListener {
@@ -47,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements GetData.GetDataLi
     private PrayerTimeFragment prayerTimeFragment;
     private WeeklyPrayersTimeFragment weeklyPrayersTimeFragment;
     private MonthlyPrayersTimeFragment monthlyPrayersTimeFragment;
+    private Fragment mFragment;
 
     private AppSettings settings;
     private GpsTracker gpsTracker;
@@ -88,6 +94,15 @@ public class HomeActivity extends AppCompatActivity implements GetData.GetDataLi
                 new GetData("http://ip-api.com/json",params,10,this).execute();
             }
         }
+
+        ImageView imageViewTest = findViewById(R.id.toolbarImageTicketActivity);
+        imageViewTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //openFrag(new NamesFragment());
+                startActivity(new Intent(HomeActivity.this , FindMosqueActivity.class));
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
@@ -179,42 +194,6 @@ public class HomeActivity extends AppCompatActivity implements GetData.GetDataLi
         return super.onOptionsItemSelected(item);
     }
 
-    public static String getUserCountry(Context context) {
-        StringBuilder ret = new StringBuilder();
-        try {
-            final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            final String simCountry = tm.getSimCountryIso();
-            if (simCountry != null && simCountry.length() == 2) { // SIM country code is available
-                ret.append(simCountry.toLowerCase(Locale.US));
-                ret.append("\n");
-                ret.append(tm.getNetworkOperatorName());
-                ret.append("\n");
-                ret.append(tm.getNetworkType());
-                ret.append("\n");
-                ret.append(tm.getPhoneType());
-                return ret.toString();
-            }
-            else if (tm.getPhoneType() != TelephonyManager.PHONE_TYPE_CDMA) { // device is not 3G (would be unreliable)
-                String networkCountry = tm.getNetworkCountryIso();
-                if (networkCountry != null && networkCountry.length() == 2) { // network country code is available
-                    ret.append(simCountry.toLowerCase(Locale.US));
-                    ret.append("\n");
-                    ret.append(tm.getNetworkOperatorName());
-                    ret.append("\n");
-                    ret.append(tm.getNetworkType());
-                    ret.append("\n");
-                    ret.append(tm.getPhoneType());
-                    return ret.toString();
-
-                }
-            }
-        }
-        catch (Exception e) {
-            ret.append(e.getMessage());
-        }
-        return ret.toString();
-    }
-
     @Override
     public void getDownloadData(String result, int request) {
         if (request == 10){
@@ -227,4 +206,81 @@ public class HomeActivity extends AppCompatActivity implements GetData.GetDataLi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionUtils.get(this).onRequestPermissionResult(permissions, grantResults);
     }
+
+    public static abstract class MainFragment extends Fragment {
+        public MainFragment() {
+            super();
+            setHasOptionsMenu(true);
+        }
+
+        public boolean onlyPortrait() {
+            return false;
+        }
+
+
+        public boolean onBackPressed() {
+            return false;
+        }
+
+        public HomeActivity getBaseActivity() {
+            return (HomeActivity) getActivity();
+        }
+
+        public void backToMain() {
+            FragmentManager fm = getBaseActivity().getSupportFragmentManager();
+            int c = fm.getBackStackEntryCount();
+            for (int i = 0; i < c; i++) {
+                fm.popBackStack();
+            }
+        }
+
+        public boolean back() {
+            FragmentManager fm = getBaseActivity().getSupportFragmentManager();
+            if (fm.getBackStackEntryCount() > 0) {
+                fm.popBackStack();
+
+                return true;
+            }
+            return false;
+        }
+
+        public void moveToFrag(Fragment frag) {
+            getBaseActivity().moveToFrag(frag);
+        }
+    }
+
+    public void moveToFrag(Fragment frag) {
+        mFragment = frag;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.basecontent, frag)
+                .addToBackStack(null)
+                .commit();
+        if (frag instanceof MainFragment)
+            setRequestedOrientation(((MainFragment)frag).onlyPortrait() ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+    }
+
+    public void clearBackStack() {
+        FragmentManager fm = getSupportFragmentManager();
+
+        for (int i = fm.getBackStackEntryCount() - 1; i >= 0; i--) {
+            fm.popBackStack();
+        }
+    }
+
+    private void openFrag(Fragment frag) {
+        clearBackStack();
+        mFragment = frag;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.basecontent, frag)
+                .commit();
+        if (frag instanceof MainFragment)
+            setRequestedOrientation(((MainFragment)frag).onlyPortrait() ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+    }
+
 }

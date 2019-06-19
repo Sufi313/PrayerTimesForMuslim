@@ -32,6 +32,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
+        <activity android:name=".findMosque.FindMosqueActivity"></activity>
         <activity android:name=".tasbeeh.TasbihActivity" />
         <activity android:name=".quran.AlQuranSettingsActivity" />
         <activity android:name=".quran.ScrollingStyleQuranActivity" />
@@ -47,10 +48,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".NotificationActivity">
             <intent-filter>
                 <action android:name="NotificationActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
