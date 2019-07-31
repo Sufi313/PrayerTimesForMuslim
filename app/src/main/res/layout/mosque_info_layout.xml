@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mosqueInfoCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_ten"
+    app:cardElevation="@dimen/space_ten"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/space_ten"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/backBtnMosque"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_chevron_left"
+            android:enabled="false" />
+
+        <Button
+            android:id="@+id/nextBtnMosque"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/ic_chevron_right"
+            android:enabled="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_mosqueImage"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:contentDescription="TODO" android:scaleType="fitXY"
+                android:src="@color/blue" />
+
+            <TextView
+                android:id="@+id/tv_mosqueName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_five"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/text_ten"
+                android:paddingStart="@dimen/text_ten" android:text="Mosque Name"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/text_twenty"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_mosqueAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_five"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingLeft="@dimen/text_ten"
+                android:paddingStart="@dimen/text_ten" android:text="Mosque Address"
+                android:textSize="@dimen/text_fifteen" />
+
+            <TextView
+                android:id="@+id/tv_mosqueDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_five"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/text_ten"
+                android:paddingStart="@dimen/text_ten" android:text="Mosque Distance"
+                android:textSize="@dimen/text_fifteen" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>
+
