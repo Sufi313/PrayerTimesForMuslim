@@ -21,7 +21,7 @@
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/transparent">
+        android:layout_alignParentStart="true" android:background="@color/transparent">
 
         <View
             android:id="@+id/center"
@@ -37,7 +37,7 @@
             android:layout_above="@+id/hline"
             android:layout_marginTop="10dip"
             android:layout_toLeftOf="@+id/center"
-            android:gravity="center"
+            android:layout_toStartOf="@+id/center" android:layout_alignParentStart="true" android:gravity="center"
             android:text="Angle"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/textColorSecondary"
@@ -53,7 +53,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dip"
             android:layout_toLeftOf="@id/center"
-            android:gravity="center"
+            android:layout_toStartOf="@id/center" android:layout_alignParentStart="true" android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white" />
 
@@ -64,7 +64,7 @@
             android:layout_above="@+id/hline"
             android:layout_marginTop="10dip"
             android:layout_toRightOf="@id/center"
-            android:gravity="center"
+            android:layout_toEndOf="@id/center" android:layout_alignParentEnd="true" android:gravity="center"
             android:text="Distance"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/textColorSecondary"
@@ -80,7 +80,7 @@
             android:layout_marginTop="15dip"
             android:layout_toRightOf="@id/center"
             android:text="0 km"
-            android:gravity="center"
+            android:layout_toEndOf="@id/center" android:layout_alignParentEnd="true" android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white" />
 
@@ -93,7 +93,7 @@
             android:layout_marginStart="5dip"
             android:layout_marginEnd="5dip"
             android:layout_marginTop="5dip"
-            android:background="@color/colorPrimary"
+            android:layout_alignParentEnd="true" android:background="@color/colorPrimary"
             android:layout_above="@+id/angle" />
 
     </RelativeLayout>

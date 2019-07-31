@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
 import java.util.List;
 import org.apache.http.HttpResponse;
@@ -23,8 +24,9 @@ public class HttpTask extends AsyncTask<Void, Void, JSONObject> {
     JSONObject json;
     JSONObject json_result;
     private OnTaskCompleted listener;
-    private Context mContext;
+//    private Context mContext;
     List<NameValuePair> nameValuePairs;
+    private WeakReference<Context> mContext;
     private ProgressDialog pd;
     String result;
     Boolean show_progress;
@@ -38,7 +40,7 @@ public class HttpTask extends AsyncTask<Void, Void, JSONObject> {
 
     public HttpTask(OnTaskCompleted listener, Context context, String url, List<NameValuePair> data, Boolean progress) {
         this.listener = listener;
-        this.mContext = context;
+        this.mContext = new WeakReference<>(context);
         this.nameValuePairs = data;
         this.url = url;
         this.show_progress = progress;
@@ -58,7 +60,7 @@ public class HttpTask extends AsyncTask<Void, Void, JSONObject> {
     protected void onPreExecute() {
         Log.d("httpreq", "PREEXE");
         if (show_progress) {
-            pd = new ProgressDialog(mContext);
+            pd = new ProgressDialog(mContext.get());
             pd.setProgressStyle(0);
             pd.setMessage("Connection in Progress...");
             pd.setCancelable(false);

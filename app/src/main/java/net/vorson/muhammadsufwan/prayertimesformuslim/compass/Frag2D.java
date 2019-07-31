@@ -1,5 +1,6 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim.compass;
 
+import android.annotation.SuppressLint;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class Frag2D extends Fragment implements QiblaActivity.MyCompassListener 
         return v;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onUpdateDirection() {
         if (mCompassView != null) {

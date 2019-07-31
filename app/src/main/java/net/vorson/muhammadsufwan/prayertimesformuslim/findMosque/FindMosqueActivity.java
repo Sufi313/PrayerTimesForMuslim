@@ -1,29 +1,27 @@
 package net.vorson.muhammadsufwan.prayertimesformuslim.findMosque;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
 import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
 import com.directions.route.RouteException;
@@ -36,23 +34,20 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import net.vorson.muhammadsufwan.prayertimesformuslim.App;
 import net.vorson.muhammadsufwan.prayertimesformuslim.R;
-import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.AppSettings;
-import net.vorson.muhammadsufwan.prayertimesformuslim.settingsAndPreferences.SettingsActivity;
+import net.vorson.muhammadsufwan.prayertimesformuslim.constantAndInterfaces.Constants;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.GetData;
 import net.vorson.muhammadsufwan.prayertimesformuslim.util.GpsTracker;
-import net.vorson.muhammadsufwan.prayertimesformuslim.util.PermissionUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,306 +56,70 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.annotations.NonNull;
 
-public class FindMosqueActivity extends AppCompatActivity implements OnMapReadyCallback, GetData.GetDataListener {
+public class FindMosqueActivity extends FragmentActivity implements OnMapReadyCallback, GetData.GetDataListener,
+        RoutingListener, FindMosqueAdapter.RecyclerViewItemClickListener {
 
+    ArrayList<Route> routes;
     private GoogleMap mMap;
     Location mLastLocation;
     LocationRequest mLocationRequest;
-    Marker pickupMarker;
+    //    Marker pickupMarker;
     GpsTracker gpsTracker;
-    AppSettings settings;
+    RecyclerView recyclerView;
+    List<MosqueDataModel> list;
+    FindMosqueAdapter adapter;
+    private LatLng destinationLatLng;
+
+    private List<Polyline> polylines;
+    private static final int[] COLORS = new int[]{R.color.primary_dark_material_light};
+
 
     private FusedLocationProviderClient mFusedLocationClient;
 
-
-    private Button  mRideStatus, mHistory;
+    private Button mRideStatus, mHistory;
 
     private int status = 0;
 
-    private String customerId = "", destination;
-    private LatLng destinationLatLng, pickupLatLng;
-    private float rideDistance;
-
-    private Boolean isLoggingOut = false;
 
     private SupportMapFragment mapFragment;
 
-    private LinearLayout mCustomerInfo;
 
-    private ImageView mCustomerProfileImage;
-
-    private TextView mCustomerName, mCustomerPhone, mCustomerDestination;
-
-
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_mosque);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        polylines = new ArrayList<>();
 
-        settings = AppSettings.getInstance(this);
-        if (settings.getString(AppSettings.Key.LAT_FOR) != null){
-
-            HashMap<String,String> params = new HashMap<>();
-            params.put("lat","25.0088");
-            params.put("lng","67.0624");
-            params.put("radius","50");
-            new GetData("http://192.168.0.47:81/abs/find_mosque_api.php",params,10,this).execute();
-
-        }else{
-            if (!PermissionUtils.get(this).pLocation) {
-                gpsTracker = new GpsTracker(this);
-                if (gpsTracker.canGetLocation()) {
-                    if (gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0) {
-                        settings.setLatFor(0, gpsTracker.getLatitude());
-                        settings.setLngFor(0, gpsTracker.getLongitude());
-                    }
-                }else{
-                    Toast.makeText(this, "An error accourd Device not found location please select menual", Toast.LENGTH_SHORT).show();
-                }
-            }
-            else if (App.isOnline()){
-                HashMap<String,String> params = new HashMap<>();
-                params.put("lat","25.0088");
-                params.put("lng","67.0624");
-                params.put("radius","50");
-                new GetData("http://192.168.0.47:81/abs/find_mosque_api.php",params,10,this).execute();
-            }
-        }
+        recyclerView = findViewById(R.id.recyclerView_findMosque);
+        recyclerView.setHasFixedSize(true);
+        gpsTracker = new GpsTracker(this);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        HashMap<String, String> params = new HashMap<>();
+        params.put("lat", String.valueOf(gpsTracker.getLatitude()));
+        params.put("lng", String.valueOf(gpsTracker.getLongitude()));
+        params.put("radius", "30");
+        new GetData("http://192.168.0.47:81/abs/find_mosque_api.php", params, 10, this).execute();
 
-
-        mCustomerInfo = (LinearLayout) findViewById(R.id.customerInfo);
-
-        mCustomerProfileImage = (ImageView) findViewById(R.id.customerProfileImage);
-
-        mCustomerName = (TextView) findViewById(R.id.customerName);
-        mCustomerPhone = (TextView) findViewById(R.id.customerPhone);
-        mCustomerDestination = (TextView) findViewById(R.id.customerDestination);
-
-
-//        mRideStatus = (Button) findViewById(R.id.rideStatus);
-//        mRideStatus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                switch(status){
-//                    case 1:
-//                        status=2;
-//                        erasePolylines();
-//                        if(destinationLatLng.latitude!=0.0 && destinationLatLng.longitude!=0.0){
-//                            getRouteToMarker(destinationLatLng);
-//                        }
-//                        mRideStatus.setText("drive completed");
-//
-//                        break;
-//                    case 2:
-//                        recordRide();
-//                        endRide();
-//                        break;
-//                }
-//            }
-//        });
-
-//        getAssignedCustomer();
     }
 
-//    private void getAssignedCustomer(){
-//        String driverId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverId).child("customerRequest").child("customerRideId");
-//        assignedCustomerRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//                    status = 1;
-//                    customerId = dataSnapshot.getValue().toString();
-//                    getAssignedCustomerPickupLocation();
-//                    getAssignedCustomerDestination();
-//                    getAssignedCustomerInfo();
-//                }else{
-//                    endRide();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-//    }
-//
-//    private DatabaseReference assignedCustomerPickupLocationRef;
-//    private ValueEventListener assignedCustomerPickupLocationRefListener;
-//
-//    private void getAssignedCustomerPickupLocation(){
-//        assignedCustomerPickupLocationRef = FirebaseDatabase.getInstance().getReference().child("customerRequest").child(customerId).child("l");
-//        assignedCustomerPickupLocationRefListener = assignedCustomerPickupLocationRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists() && !customerId.equals("")){
-//                    List<Object> map = (List<Object>) dataSnapshot.getValue();
-//                    double locationLat = 0;
-//                    double locationLng = 0;
-//                    if(map.get(0) != null){
-//                        locationLat = Double.parseDouble(map.get(0).toString());
-//                    }
-//                    if(map.get(1) != null){
-//                        locationLng = Double.parseDouble(map.get(1).toString());
-//                    }
-//                    pickupLatLng = new LatLng(locationLat,locationLng);
-//                    pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLatLng).title("pickup location").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pickup)));
-//                    getRouteToMarker(pickupLatLng);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-//    }
-//
-//    private void getRouteToMarker(LatLng pickupLatLng) {
-//        if (pickupLatLng != null && mLastLocation != null){
-//            Routing routing = new Routing.Builder()
-//                    .travelMode(AbstractRouting.TravelMode.DRIVING)
-//                    .withListener(this)
-//                    .alternativeRoutes(false)
-//                    .waypoints(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), pickupLatLng)
-//                    .build();
-//            routing.execute();
-//        }
-//    }
-//
-//    private void getAssignedCustomerDestination(){
-//        String driverId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverId).child("customerRequest");
-//        assignedCustomerRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()) {
-//                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-//                    if(map.get("destination")!=null){
-//                        destination = map.get("destination").toString();
-//                        mCustomerDestination.setText("Destination: " + destination);
-//                    }
-//                    else{
-//                        mCustomerDestination.setText("Destination: --");
-//                    }
-//
-//                    Double destinationLat = 0.0;
-//                    Double destinationLng = 0.0;
-//                    if(map.get("destinationLat") != null){
-//                        destinationLat = Double.valueOf(map.get("destinationLat").toString());
-//                    }
-//                    if(map.get("destinationLng") != null){
-//                        destinationLng = Double.valueOf(map.get("destinationLng").toString());
-//                        destinationLatLng = new LatLng(destinationLat, destinationLng);
-//                    }
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-//    }
-//
-//
-//    private void getAssignedCustomerInfo(){
-//        mCustomerInfo.setVisibility(View.VISIBLE);
-//        DatabaseReference mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId);
-//        mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
-//                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-//                    if(map.get("name")!=null){
-//                        mCustomerName.setText(map.get("name").toString());
-//                    }
-//                    if(map.get("phone")!=null){
-//                        mCustomerPhone.setText(map.get("phone").toString());
-//                    }
-//                    if(map.get("profileImageUrl")!=null){
-//                        Glide.with(getApplication()).load(map.get("profileImageUrl").toString()).into(mCustomerProfileImage);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-//    }
-//
-//
-//    private void endRide(){
-//        mRideStatus.setText("picked customer");
-//        erasePolylines();
-//
-//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(userId).child("customerRequest");
-//        driverRef.removeValue();
-//
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("customerRequest");
-//        GeoFire geoFire = new GeoFire(ref);
-//        geoFire.removeLocation(customerId);
-//        customerId="";
-//        rideDistance = 0;
-//
-//        if(pickupMarker != null){
-//            pickupMarker.remove();
-//        }
-//        if (assignedCustomerPickupLocationRefListener != null){
-//            assignedCustomerPickupLocationRef.removeEventListener(assignedCustomerPickupLocationRefListener);
-//        }
-//        mCustomerInfo.setVisibility(View.GONE);
-//        mCustomerName.setText("");
-//        mCustomerPhone.setText("");
-//        mCustomerDestination.setText("Destination: --");
-//        mCustomerProfileImage.setImageResource(R.mipmap.ic_default_user);
-//    }
-//
-//    private void recordRide(){
-//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(userId).child("history");
-//        DatabaseReference customerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("history");
-//        DatabaseReference historyRef = FirebaseDatabase.getInstance().getReference().child("history");
-//        String requestId = historyRef.push().getKey();
-//        driverRef.child(requestId).setValue(true);
-//        customerRef.child(requestId).setValue(true);
-//
-//        HashMap map = new HashMap();
-//        map.put("driver", userId);
-//        map.put("customer", customerId);
-//        map.put("rating", 0);
-//        map.put("timestamp", getCurrentTimestamp());
-//        map.put("destination", destination);
-//        map.put("location/from/lat", pickupLatLng.latitude);
-//        map.put("location/from/lng", pickupLatLng.longitude);
-//        map.put("location/to/lat", destinationLatLng.latitude);
-//        map.put("location/to/lng", destinationLatLng.longitude);
-//        map.put("distance", rideDistance);
-//        historyRef.child(requestId).updateChildren(map);
-//    }
-//
-//    private Long getCurrentTimestamp() {
-//        Long timestamp = System.currentTimeMillis()/1000;
-//        return timestamp;
-//    }
-//
-//
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        MapsInitializer.initialize(this);
+        mMap.setMyLocationEnabled(true);
+        LatLng latLng = new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
@@ -368,158 +127,66 @@ public class FindMosqueActivity extends AppCompatActivity implements OnMapReadyC
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
     }
-//
-////
-//    LocationCallback mLocationCallback = new LocationCallback(){
-//        @Override
-//        public void onLocationResult(LocationResult locationResult) {
-//            for(Location location : locationResult.getLocations()){
-//                if(getApplicationContext()!=null){
-//
-//                    if(!customerId.equals("") && mLastLocation!=null && location != null){
-//                        rideDistance += mLastLocation.distanceTo(location)/1000;
-//                    }
-//                    mLastLocation = location;
-//
-//
-//                    LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-//                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//                    mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-//
-//                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                    DatabaseReference refAvailable = FirebaseDatabase.getInstance().getReference("driversAvailable");
-//                    DatabaseReference refWorking = FirebaseDatabase.getInstance().getReference("driversWorking");
-//                    GeoFire geoFireAvailable = new GeoFire(refAvailable);
-//                    GeoFire geoFireWorking = new GeoFire(refWorking);
-//
-//                    switch (customerId){
-//                        case "":
-//                            geoFireWorking.removeLocation(userId);
-//                            geoFireAvailable.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
-//                            break;
-//
-//                        default:
-//                            geoFireAvailable.removeLocation(userId);
-//                            geoFireWorking.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
-//                            break;
-//                    }
-//                }
-//            }
-//        }
-//    };
-//
-//    private void checkLocationPermission() {
-//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-//                new AlertDialog.Builder(this)
-//                        .setTitle("give permission")
-//                        .setMessage("give permission message")
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                ActivityCompat.requestPermissions(FindMosqueActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//                            }
-//                        })
-//                        .create()
-//                        .show();
-//            }
-//            else{
-//                ActivityCompat.requestPermissions(FindMosqueActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch(requestCode){
-//            case 1:{
-//                if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-//                        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-//                        mMap.setMyLocationEnabled(true);
-//                    }
-//                } else{
-//                    Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
-//                }
-//                break;
-//            }
-//        }
-//    }
-//
-//
-//    private List<Polyline> polylines;
-//    private static final int[] COLORS = new int[]{R.color.primary_dark_material_light};
-//    @Override
-//    public void onRoutingFailure(RouteException e) {
-//        if(e != null) {
-//            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-//        }else {
-//            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//    @Override
-//    public void onRoutingStart() {
-//    }
-//
-//
-//    @Override
-//    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-//        if(polylines.size()>0) {
-//            for (Polyline poly : polylines) {
-//                poly.remove();
-//            }
-//        }
-//
-//        polylines = new ArrayList<>();
-//        //add route(s) to the map.
-//        for (int i = 0; i <route.size(); i++) {
-//
-//            //In case of more than 5 alternative routes
-//            int colorIndex = i % COLORS.length;
-//
-//            PolylineOptions polyOptions = new PolylineOptions();
-//            polyOptions.color(getResources().getColor(COLORS[colorIndex]));
-//            polyOptions.width(10 + i * 3);
-//            polyOptions.addAll(route.get(i).getPoints());
-//            Polyline polyline = mMap.addPolyline(polyOptions);
-//            polylines.add(polyline);
-//
-//            Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()+": duration - "+ route.get(i).getDurationValue(),Toast.LENGTH_SHORT).show();
-//        }
-//
-//    }
-//    @Override
-//    public void onRoutingCancelled() {
-//    }
-//    private void erasePolylines(){
-//        for(Polyline line : polylines){
-//            line.remove();
-//        }
-//        polylines.clear();
-//    }
 
-    protected Marker createMarker(double latitude, double longitude, String title, String snippet, int iconResID) {
 
-        return mMap.addMarker(new MarkerOptions()
+    LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            for (Location location : locationResult.getLocations()) {
+                if (getApplicationContext() != null) {
+
+                    mLastLocation = location;
+
+
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+                }
+            }
+        }
+    };
+
+    protected void createMarker(double latitude, double longitude, String title, String snippet) {
+
+        mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title)
                 .snippet(snippet)
-                .icon(BitmapDescriptorFactory.fromResource(iconResID)));
+                .icon(bitmapDescriptorFromVector(this)));
     }
 
     @Override
     public void getDownloadData(String result, int request) {
-        if (request == 10){
-            Log.d("DATA", "getDownloadData: "+result);
+        if (request == 10) {
+            Log.d("DATA", "getDownloadData: " + result);
+            list = new ArrayList<>();
             try {
                 JSONObject object = new JSONObject(result);
-                JSONArray mosqueList = object.getJSONArray("list");
-                for(int i = 0 ; i < mosqueList.length() ; i++) {
-                    object = mosqueList.getJSONObject(i);
-                    createMarker(Double.parseDouble(object.getString("lat")), Double.parseDouble(object.getString("lng")),
-                            object.getString("name"), object.getString("address"), R.drawable.ic_mosque);
+                if (!object.getBoolean("error")) {
+
+                    JSONArray mosqueList = object.getJSONArray("list");
+                    for (int i = 0; i < mosqueList.length(); i++) {
+                        object = mosqueList.getJSONObject(i);
+                        list.add(new MosqueDataModel(
+                                object.getInt("id"),
+                                object.getString("name"),
+                                object.getString("address"),
+                                object.getString("image"),
+                                object.getDouble("lat"),
+                                object.getDouble("lng"),
+                                object.getDouble("distance")
+                        ));
+                        createMarker(Double.parseDouble(object.getString("lat")), Double.parseDouble(object.getString("lng")),
+                                object.getString("name"), object.getString("address"));
+                    }
+                    SnapHelper mSnapHelper = new PagerSnapHelper();
+                    mSnapHelper.attachToRecyclerView(recyclerView);
+                    adapter = new FindMosqueAdapter(this, list, this);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -527,4 +194,127 @@ public class FindMosqueActivity extends AppCompatActivity implements OnMapReadyC
 
         }
     }
+
+   /* private boolean isGooglePlayServicesAvailable() {
+        int status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        if (ConnectionResult.SUCCESS == status) {
+            return true;
+        } else {
+            GooglePlayServicesUtil.getErrorDialog(status, this, 0).show();
+            return false;
+        }
+    } */
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+        if (e != null) {
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("Routing Error", e.getMessage());
+        } else {
+            Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRoutingStart() {
+        Toast.makeText(this, "Routing Start", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> arrayList, int shortestRouteIndex) {
+        if (polylines.size() > 0) {
+            for (Polyline poly : polylines) {
+                poly.remove();
+            }
+        }
+
+        polylines = new ArrayList<>();
+        //add route(s) to the map.
+        for (int i = 0; i < arrayList.size(); i++) {
+
+            //In case of more than 5 alternative routes
+            int colorIndex = i % COLORS.length;
+
+            PolylineOptions polyOptions = new PolylineOptions();
+            polyOptions.color(getResources().getColor(COLORS[colorIndex]));
+            polyOptions.width(10 + i * 3);
+            polyOptions.addAll(arrayList.get(i).getPoints());
+            Polyline polyline = mMap.addPolyline(polyOptions);
+            polylines.add(polyline);
+
+        }
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+        Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
+    }
+
+//    RECYLERVIEW ITEM CLICK IMPLEMENTATION
+
+    @Override
+    public void onNextButtonClick(View v, int position) {
+        recyclerView.smoothScrollToPosition(position + 1);
+    }
+
+    @Override
+    public void onBackButtonClick(View v, int position) {
+        recyclerView.smoothScrollToPosition(position - 1);
+    }
+
+    @Override
+    public void onImageButtonClick(View v, int position) {
+        if (polylines != null) {
+            erasePolylines();
+        }
+        if (destinationLatLng != null) {
+            destinationLatLng = null;
+        }
+        destinationLatLng = new LatLng(list.get(position).getLat(), list.get(position).getLng());
+        getRouteToMarker(destinationLatLng);
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context) {
+        Drawable background = ContextCompat.getDrawable(context, R.drawable.ic_mosque);
+        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        background.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private void getRouteToMarker(LatLng destinationLatLng) {
+        if (destinationLatLng != null && gpsTracker != null) {
+            Routing routing = new Routing.Builder()
+                    .travelMode(AbstractRouting.TravelMode.DRIVING)
+                    .withListener(this)
+                    .alternativeRoutes(false)
+                    .waypoints(new LatLng(gpsTracker.getLatitude(), gpsTracker.getLongitude()), destinationLatLng)
+                    .build();
+            routing.execute();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == Constants.REQUEST_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                    mMap.setMyLocationEnabled(true);
+                }
+            } else {
+                onBackPressed();
+            }
+        }
+    }
+
+    private void erasePolylines() {
+        for (Polyline line : polylines) {
+            line.remove();
+        }
+        polylines.clear();
+    }
+
 }

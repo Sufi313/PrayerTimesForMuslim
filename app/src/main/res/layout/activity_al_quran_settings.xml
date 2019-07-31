@@ -21,7 +21,7 @@
                 android:id="@+id/readingSettingLayout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:orientation="horizontal"
+                android:baselineAligned="false" android:orientation="horizontal"
                 android:weightSum="1"
                 android:background="@color/white">
 
@@ -31,11 +31,11 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:padding="@dimen/space_ten"
+                        android:contentDescription="TODO" android:padding="@dimen/space_ten"
                         android:layout_gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_reading"/>
+                        app:srcCompat="@drawable/ic_reading"/>
 
                 </FrameLayout>
 

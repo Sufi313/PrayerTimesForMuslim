@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements GetData.GetDataLi
             settings.set(AppSettings.Key.IS_INIT, true);
         }
         if (settings.getString(AppSettings.Key.LAT_FOR) == null){
-            if (!PermissionUtils.get(this).pLocation) {
+            if (PermissionUtils.get(this).pLocation) {
                 gpsTracker = new GpsTracker(this);
                 if (gpsTracker.canGetLocation()) {
                     if (gpsTracker.getLatitude() != 0 && gpsTracker.getLongitude() != 0) {

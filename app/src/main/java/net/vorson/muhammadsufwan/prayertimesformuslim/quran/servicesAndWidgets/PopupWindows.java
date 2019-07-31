@@ -40,7 +40,7 @@ public class PopupWindows {
                 return true;
             }
         });
-        this.mWindowManager = (WindowManager) context.getSystemService("window");
+        this.mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     }
 
     protected void preShow() {

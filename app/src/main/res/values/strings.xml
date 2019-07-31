@@ -365,4 +365,6 @@
     <string name="choose_memorization_method">Chosse Memorization Method</string>
     <string name="prefill">1</string>
 
+    <string name="mosque_distance">%skm far of your location</string>
+
 </resources>

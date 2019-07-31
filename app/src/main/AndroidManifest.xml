@@ -73,7 +73,7 @@
         </activity>
 
         <receiver
-            android:name=".util.TimeZoneChangedReceiver"
+            android:name=".util.TimeZoneChangedReceiver" android:permission="" 
             android:enabled="true"
             android:exported="true" />
 
@@ -82,9 +82,9 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/secret_google_maps_api_key" />
+            android:value="@string/google_maps_key" />
 
-        <service android:name=".sevices.FireBaseInstanceIdService">
+        <service android:name=".sevices.FireBaseInstanceIdService" android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

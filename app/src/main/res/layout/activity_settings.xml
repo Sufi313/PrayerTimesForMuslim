@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:weightSum="1"
-                android:orientation="horizontal">
+                android:baselineAligned="false" android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_weight="0.75"
@@ -58,7 +58,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_music_note"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/ic_music_note"
                         />
                 </LinearLayout>
 
@@ -91,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:weightSum="1"
-                android:orientation="horizontal">
+                android:baselineAligned="false" android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_weight="0.75"
@@ -102,7 +103,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_music_note"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/ic_music_note"
                         />
                 </LinearLayout>
 
@@ -137,7 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:weightSum="1"
-                android:orientation="horizontal">
+                android:baselineAligned="false" android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_weight="0.75"
@@ -148,7 +150,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_reading"
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/ic_reading"
                         />
                 </LinearLayout>
 

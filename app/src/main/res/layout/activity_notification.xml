@@ -27,7 +27,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="start"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_sharp_arrow_back"
+                app:srcCompat="@drawable/ic_sharp_arrow_back"
                 android:background="@drawable/ripple_effect"
                 />
 
@@ -39,6 +39,8 @@
                 android:textSize="@dimen/text_twenty"
                 android:paddingStart="@dimen/space_ten"
                 android:paddingLeft="@dimen/space_ten"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp"
                 />
 
         </androidx.appcompat.widget.Toolbar>
@@ -67,6 +69,7 @@
                     android:id="@+id/notiBG"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="TODO"
                     android:scaleType="fitXY"/>
 
                 <TextView
@@ -89,14 +92,14 @@
                android:layout_height="wrap_content"
                android:text="@string/notification"
                android:padding="@dimen/space_ten"
-               android:textSize="@dimen/space_twentyfive"/>
+               android:textSize="@dimen/text_twentyfive"/>
 
             <TextView
                 android:id="@+id/notificationContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/notification"
-                android:textSize="@dimen/space_twenty"
+                android:textSize="@dimen/text_twenty"
                 android:paddingLeft="@dimen/space_ten"
                 android:paddingRight="@dimen/space_ten"
                 />

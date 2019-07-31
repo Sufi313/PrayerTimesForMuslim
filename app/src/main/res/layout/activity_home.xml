@@ -27,7 +27,7 @@
                 android:layout_height="@dimen/space_fifty"
                 android:layout_gravity="center"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_muslim" />
+                app:srcCompat="@drawable/ic_muslim" />
 
         </androidx.appcompat.widget.Toolbar>
 

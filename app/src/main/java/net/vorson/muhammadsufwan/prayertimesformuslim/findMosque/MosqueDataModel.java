@@ -3,15 +3,17 @@ package net.vorson.muhammadsufwan.prayertimesformuslim.findMosque;
 public class MosqueDataModel {
 
     private int id;
-    private String name,address;
-    private float lat,lng;
+    private String name,address,image;
+    private Double lat,lng, distance;
 
-    public MosqueDataModel(int id, String name, String address, float lat, float lng) {
+    public MosqueDataModel(int id, String name, String address,String image, Double lat, Double lng, Double distance) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.image = image;
         this.lat = lat;
         this.lng = lng;
+        this.distance = distance;
     }
 
     public int getId() {
@@ -26,12 +28,20 @@ public class MosqueDataModel {
         return address;
     }
 
-    public float getLat() {
+    public String getImage() {
+        return image;
+    }
+
+    public Double getLat() {
         return lat;
     }
 
-    public float getLng() {
+    public Double getLng() {
         return lng;
+    }
+
+    public Double getDistance() {
+        return distance;
     }
 
 }

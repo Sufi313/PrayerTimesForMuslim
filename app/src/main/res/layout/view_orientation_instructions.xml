@@ -30,17 +30,17 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_orientation_left_right"/>
+            android:contentDescription="TODO" app:srcCompat="@drawable/icon_orientation_left_right"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_orientation_up_down"/>
+            android:contentDescription="TODO" app:srcCompat="@drawable/icon_orientation_up_down"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_orientation_round"/>
+            android:contentDescription="TODO" app:srcCompat="@drawable/icon_orientation_round"/>
 
     </LinearLayout>
 

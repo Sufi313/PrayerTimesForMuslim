@@ -112,8 +112,8 @@ public class App extends Application {
         mSystemLocale = Locale.getDefault();
 
         new FireBaseInstanceIdService();
-        Log.d(TAG, "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
-        FirebaseMessaging.getInstance().subscribeToTopic("Namaz");
+//        Log.d(TAG, "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
+//        FirebaseMessaging.getInstance().subscribeToTopic("Namaz");
         
         DateTimeZone.setProvider(new AndroidTimeZoneProvider());
         registerReceiver(new TimeZoneChangedReceiver(), new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED));
