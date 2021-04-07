@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <net.vorson.muhammadsufwan.prayertimesformuslim.compass.CompassView
+    <com.sufi.prayertimes.compass.CompassView
         android:id="@+id/compass"
         android:translationZ="2dp"
         android:layout_width="fill_parent"

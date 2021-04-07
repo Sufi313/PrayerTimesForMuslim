@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="net.vorson.muhammadsufwan.prayertimesformuslim.PrayTimeWidgetConfigureActivity"
+    android:configure="com.sufi.prayertimes.PrayTimeWidgetConfigureActivity"
     android:initialKeyguardLayout="@layout/pray_time_widget"
     android:initialLayout="@layout/pray_time_widget"
     android:minWidth="250dp"

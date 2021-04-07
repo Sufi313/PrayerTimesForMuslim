@@ -366,5 +366,6 @@
     <string name="prefill">1</string>
 
     <string name="mosque_distance">%skm far of your location</string>
+    <string name="channel_description">Simple Notification</string>
 
 </resources>

@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <net.vorson.muhammadsufwan.prayertimesformuslim.quran.BackgroundView
+            <com.sufi.prayertimes.quran.BackgroundView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -74,7 +74,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <net.vorson.muhammadsufwan.prayertimesformuslim.quran.servicesAndWidgets.VerticalTextView
+                    <com.sufi.prayertimes.quran.servicesAndWidgets.VerticalTextView
                         android:id="@+id/vertical_text_View_hezb"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -101,7 +101,7 @@
                     android:background="#14000000"
                     android:orientation="vertical">
 
-                    <net.vorson.muhammadsufwan.prayertimesformuslim.quran.servicesAndWidgets.VerticalSeekBar
+                    <com.sufi.prayertimes.quran.servicesAndWidgets.VerticalSeekBar
                         android:id="@+id/seekBar1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

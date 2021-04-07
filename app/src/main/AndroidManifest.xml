@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.vorson.muhammadsufwan.prayertimesformuslim">
+    package="com.sufi.prayertimes">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -32,26 +32,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
-        <activity android:name=".findMosque.FindMosqueActivity"></activity>
+
+        <activity android:name=".findMosque.FindMosqueActivity" />
         <activity android:name=".tasbeeh.TasbihActivity" />
         <activity android:name=".quran.AlQuranSettingsActivity" />
         <activity android:name=".quran.ScrollingStyleQuranActivity" />
         <activity android:name=".quran.QuranActivity" />
         <activity android:name=".IslamicCalendarActivity" />
         <activity android:name=".compass.QiblaActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".settingsAndPreferences.SettingsActivity" />
+        <activity android:name=".ShowPrayAlarmActivity" />
+        <activity android:name=".SerachCityActivity" />
+        <activity android:name=".quran.PrefsActivity" />
+        <activity android:name=".PrayTimeWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="user">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".NotificationActivity">
             <intent-filter>
                 <action android:name="NotificationActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -66,16 +75,12 @@
                 android:resource="@xml/pray_time_widget_info" />
         </receiver>
 
-        <activity android:name=".PrayTimeWidgetConfigureActivity">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
 
         <receiver
-            android:name=".util.TimeZoneChangedReceiver" android:permission="" 
+            android:name=".util.TimeZoneChangedReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -83,20 +88,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-        <service android:name=".sevices.FireBaseInstanceIdService" android:permission="">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="07d248c4082b57df00b2486c17f85f5aba5ae17a" />
-
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".settingsAndPreferences.SettingsActivity" />
-        <activity android:name=".ShowPrayAlarmActivity" />
 
         <receiver android:name=".scheduler.PassiveLocationChangedReceiver" />
         <receiver android:name=".scheduler.SalaatAlarmReceiver" />
@@ -113,8 +104,6 @@
 
         <service android:name=".scheduler.SalaatSchedulingService" />
 
-        <activity android:name=".SerachCityActivity" />
-        <activity android:name=".quran.PrefsActivity" />
 
         <receiver
             android:name=".quran.NotificationBroadcast"
@@ -127,6 +116,24 @@
                 <action android:name="com.isysway.free.alquran.previous" />
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_muslim" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/white" />
+
+        <service
+            android:name=".services.FireBaseNotificationService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
     </application>
 
 </manifest>

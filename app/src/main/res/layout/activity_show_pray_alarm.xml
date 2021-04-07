@@ -18,7 +18,7 @@
         android:textSize="24sp"/>
 
 
-    <net.vorson.muhammadsufwan.prayertimesformuslim.customWidget.swipeButton.SwipeButton
+    <com.sufi.prayertimes.customWidget.swipeButton.SwipeButton
         android:id="@+id/swipe_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
