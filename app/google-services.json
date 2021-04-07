@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "182480262720",
+    "project_id": "prayertimes-23c7b",
+    "storage_bucket": "prayertimes-23c7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182480262720:android:828c1e7c8b559f0806b1a5",
+        "android_client_info": {
+          "package_name": "com.sufi.prayertimes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182480262720-nptao9dk56cjc5leinhtkuaaq3joil02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdgDxhhoXhTCUw13mTfLPwEbXR8Ukb5Ko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182480262720-nptao9dk56cjc5leinhtkuaaq3joil02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
